@@ -62,36 +62,42 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
 
 > 🎅 *¡Itsuki Nakano V3 encontró tu video!* 🎄`;
 
+    // Enviar información con la miniatura del video como imagen principal Y footer con thumbnailUrl
     await conn.sendMessage(m.chat, { 
-      image: { url: thumbnailUrl }, 
-      caption: info 
+      image: { url: imageUrl }, 
+      caption: info,
+      contextInfo: {
+        externalAdReply: {
+          title: `🎬 ${title.substring(0, 30)}...`,
+          body: `⏱️ ${duration} • 👑 ${channel}`,
+          mediaType: 1,
+          previewType: 0,
+          thumbnail: await (await fetch(thumbnailUrl)).buffer(),
+          sourceUrl: link,
+          mediaUrl: link
+        }
+      }
     }, { quoted: m });
 
-    // API de video
-    const res = await fetch(`https://api.vreden.my.id/api/v1/download/youtube/video?url=${link}&quality=360`);
-    const json = await res.json();
-
-    if (!json.status || !json.result?.download?.url) {
-      await conn.sendMessage(m.chat, { react: { text: '❌', key: m.key } })
-      return m.reply(`> 🎄 *¡ERROR DE VIDEO!* 🎅
-
-> ❌ *No se pudo obtener el video*
-
-> 🎅 *Posibles causas:*
-> • El video podría estar restringido
-> • Problemas temporales con la API
-> • Calidad no disponible
-
-> 🎄 *¡Itsuki Nakano V3 lo intentará de nuevo!* 🎁`);
+    // API de video alternativa para evitar error JSON
+    const videoRes = await fetch(`https://api.download-lagu-mp3.com/@api/button/mp4/${encodeURIComponent(link)}`);
+    const videoHtml = await videoRes.text();
+    
+    // Extraer URL del video del HTML (método alternativo)
+    const urlMatch = videoHtml.match(/href="(https:[^"]*\.mp4[^"]*)"/);
+    if (!urlMatch || !urlMatch[1]) {
+      throw new Error('No se pudo obtener el enlace de descarga del video');
     }
+
+    const videoUrl = urlMatch[1];
 
     await conn.sendMessage(m.chat, { react: { text: '📥', key: m.key } })
 
     await conn.sendMessage(
       m.chat,
       {
-        video: { url: json.result.download.url },
-        fileName: `${title} (360p).mp4`,
+        video: { url: videoUrl },
+        fileName: `${title.substring(0, 50)}.mp4`,
         mimetype: 'video/mp4',
         caption: `> 🎄 *VIDEO NAVIDEÑO DESCARGADO* 🎅
 
@@ -101,7 +107,18 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
 \`\`\`360p\`\`\`
 
 > 🎁 *¡Disfruta de tu contenido navideño!*
-> 🎅 *Itsuki Nakano V3 te desea felices fiestas* 🎄`
+> 🎅 *Itsuki Nakano V3 te desea felices fiestas* 🎄`,
+        contextInfo: {
+          externalAdReply: {
+            title: `✅ Video Descargado`,
+            body: `🎬 ${title.substring(0, 25)}...`,
+            mediaType: 1,
+            previewType: 0,
+            thumbnail: await (await fetch(thumbnailUrl)).buffer(),
+            sourceUrl: link,
+            mediaUrl: link
+          }
+        }
       },
       { quoted: m }
     );
@@ -111,19 +128,34 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
   } catch (e) {
     console.error('🎄 Error en play5:', e);
     await conn.sendMessage(m.chat, { react: { text: '❌', key: m.key } })
-    m.reply(`> 🎄 *¡ERROR NAVIDEÑO!* 🎅
+    
+    let errorMessage = `> 🎄 *¡ERROR NAVIDEÑO!* 🎅
 
 > ❌ *Error al procesar tu solicitud*
 
 > 📝 *Detalles:*
-\`\`\`${e.message}\`\`\`
+\`\`\`${e.message}\`\`\``;
+
+    // Mensaje específico para error JSON
+    if (e.message.includes('Unexpected token') || e.message.includes('JSON')) {
+      errorMessage += `
+
+> 🔧 *Error de API:*
+> • La API de descarga no respondió correctamente
+> • Se intentó método alternativo pero falló`;
+    }
+
+    errorMessage += `
 
 > 🎅 *Sugerencias:*
 > • Verifica tu conexión a internet
 > • Intenta con otro nombre de video
+> • El video podría estar restringido
 > • Espera unos minutos y vuelve a intentar
 
-> 🎄 *¡Itsuki Nakano V3 está aquí para ayudarte!* 🎁`);
+> 🎄 *¡Itsuki Nakano V3 está aquí para ayudarte!* 🎁`;
+
+    m.reply(errorMessage);
   }
 };
 
