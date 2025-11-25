@@ -141,7 +141,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 
 handler.tags = ['downloader']
 handler.help = ['modoapk']
-handler.command = ['modapk', 'apk2']
+handler.command = ['modapk2', 'apk2']
 handler.group = true
 // handler.premium = false
 
