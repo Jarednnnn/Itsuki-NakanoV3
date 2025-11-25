@@ -33,13 +33,13 @@ function saveRestartInfo(chatId) {
     timestamp: Date.now(),
     type: 'restart'
   }
-  
+
   // Asegurarse de que la carpeta temp existe
   const tempDir = path.join(ROOT, 'temp')
   if (!fs.existsSync(tempDir)) {
     fs.mkdirSync(tempDir, { recursive: true })
   }
-  
+
   fs.writeFileSync(restartFile, JSON.stringify(info, null, 2))
 }
 
@@ -88,9 +88,7 @@ let handler = async (m, { conn, usedPrefix, command, isOwner, isROwner }) => {
   try {
     await conn.reply(
       m.chat,
-      `> 🎄 *¡BOT EN LÍNEA!* 🎅
-
-> ✅ *Itsuki Nakano V3 reconectado exitosamente*
+      `> 🤖 *BOT EN LÍNEANUEVAMENTE SISTEM ONLINE 🍃*
 
 > 🌐 *Estado del servidor:* Conectado
 > ⚡ *Servicios:* Activos
@@ -102,7 +100,7 @@ let handler = async (m, { conn, usedPrefix, command, isOwner, isROwner }) => {
 > 💾 Servicios: 🟢 Todos operativos
 
 > 🎅 *¡Itsuki V3 está listo para ayudarte de nuevo!*
-> 🎄 *¡Feliz Navidad!* 🎁`,`.slice(0, 3500),
+> 🎄 *¡Feliz Navidad!* 🎁`.slice(0, 3500),
       m
     )
   } catch {}
@@ -121,37 +119,9 @@ export async function sendReconnectionMessage(conn) {
     try {
       const info = JSON.parse(fs.readFileSync(restartFile, 'utf8'))
       
-      // Esperar un poco para asegurar que el bot esté completamente conectado
-      setTimeout(async () => {
-        try {
-          await conn.reply(
-            /*info.chatId,
-            `> 🎄 *¡BOT EN LÍNEA!* 🎅
+      // Limpiar archivo temporal
+      fs.unlinkSync(restartFile)
 
-> ✅ *Itsuki Nakano V3 reconectado exitosamente*
-
-> 🌐 *Estado del servidor:* Conectado
-> ⚡ *Servicios:* Activos
-> 🎯 *Funciones:* Operativas
-
-> 📊 *Información del sistema:*
-> 🕑 Tiempo de reconexión: ${Date.now() - info.timestamp}ms
-> 🔰 Estado: ✅ Conectado al servidor
-> 💾 Servicios: 🟢 Todos operativos
-
-> 🎅 *¡Itsuki V3 está listo para ayudarte de nuevo!*
-> 🎄 *¡Feliz Navidad!* 🎁`,*/
-            null
-          )
-          
-          // Limpiar archivo temporal
-          fs.unlinkSync(restartFile)
-          
-        } catch (error) {
-          console.error('❌ Error enviando mensaje de reconexión:', error)
-        }
-      }, 5000) // Esperar 5 segundos después de la conexión
-      
     } catch (error) {
       console.error('❌ Error leyendo información de reinicio:', error)
     }
