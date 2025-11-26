@@ -73,7 +73,7 @@ function isPremiumJid(jid) {
 function parseUserTargets(input, options = {}) {
     try {
         if (!input || input.trim() === '') return [];
-        
+
         const defaults = {
             allowLids: true,
             resolveMentions: true,
@@ -81,24 +81,24 @@ function parseUserTargets(input, options = {}) {
             maxTargets: 50
         };
         const opts = { ...defaults, ...options };
-        
+
         // Si ya es un array, devolverlo limpiando
         if (Array.isArray(input)) {
             return input.map(jid => normalizeJid(jid)).filter(jid => jid);
         }
-        
+
         // Si es string, procesarlo
         if (typeof input === 'string') {
             let targets = [];
-            
+
             // Procesar menciones si están disponibles y se solicita
             if (opts.resolveMentions && m && m._mentionedJidResolved && m._mentionedJidResolved.length > 0) {
                 targets.push(...m._mentionedJidResolved.map(jid => normalizeJid(jid)));
             }
-            
+
             // Procesar texto para extraer números/JIDs
             const textTargets = input.split(/[,;\s\n]+/).map(item => item.trim()).filter(item => item);
-            
+
             for (let item of textTargets) {
                 // Si es una mención (@usuario)
                 if (item.startsWith('@')) {
@@ -109,7 +109,7 @@ function parseUserTargets(input, options = {}) {
                     }
                     continue;
                 }
-                
+
                 // Si es un número de teléfono
                 if (/^[\d+][\d\s\-()]+$/.test(item)) {
                     const cleanNum = item.replace(/[^\d+]/g, '');
@@ -119,35 +119,58 @@ function parseUserTargets(input, options = {}) {
                     }
                     continue;
                 }
-                
+
                 // Si ya parece un JID
                 if (item.includes('@')) {
                     targets.push(normalizeJid(item));
                     continue;
                 }
-                
+
                 // Para otros casos, tratar como número
                 if (/^\d+$/.test(item) && item.length >= 8) {
                     targets.push(`${item}@s.whatsapp.net`);
                 }
             }
-            
+
             // Eliminar duplicados y limpiar
             targets = [...new Set(targets.map(jid => normalizeJid(jid)).filter(jid => jid))];
-            
+
             // Limitar número máximo de targets
             if (opts.maxTargets && targets.length > opts.maxTargets) {
                 targets = targets.slice(0, opts.maxTargets);
             }
-            
+
             return targets;
         }
-        
+
         return [];
     } catch (error) {
         console.error('Error en parseUserTargets:', error);
         return [];
     }
+}
+
+// SISTEMA DE PRIMARY BOT - AGREGADO
+async function handlePrimaryBotSystem(m, conn) {
+    if (!m.isGroup) return false;
+    
+    const chat = global.db.data.chats[m.chat];
+    if (!chat?.primaryBot) return false;
+
+    const universalWords = ['resetbot', 'resetprimario', 'botreset', 'setprimary', 'primary', 'unprimary'];
+    const firstWord = m.text ? m.text.trim().split(' ')[0].toLowerCase().replace(/^[./#]/, '') : '';
+
+    // Permitir comandos universales de administración de primary bot
+    if (universalWords.includes(firstWord)) {
+        return false;
+    }
+
+    // Si este bot no es el primary bot, no procesar el comando
+    if (conn?.user?.jid !== chat.primaryBot) {
+        return true; // Indicar que se debe ignorar el comando
+    }
+
+    return false; // Continuar con el procesamiento normal
 }
 
 export async function handler(chatUpdate) {
@@ -267,6 +290,10 @@ export async function handler(chatUpdate) {
     m = smsg(this, m) || m
     if (!m) return
 
+    // SISTEMA PRIMARY BOT - VERIFICACIÓN MEJORADA
+    const shouldIgnore = await handlePrimaryBotSystem(m, this);
+    if (shouldIgnore) return;
+
     if (!m.isGroup) return
     m.exp = 0
     m.limit = false
@@ -305,9 +332,13 @@ export async function handler(chatUpdate) {
         for (const [k, v] of Object.entries(cfgDefaults)) { if (!(k in chat)) chat[k] = v }
         // Alias: mantener 'bienvenida' sincronizado si usas 'welcome'
         if (!('bienvenida' in chat) && ('welcome' in chat)) chat.bienvenida = !!chat.welcome
+        // SISTEMA PRIMARY BOT - INICIALIZACIÓN
+        if (!('primaryBot' in chat)) chat.primaryBot = null
       } else {
         global.db.data.chats[m.chat] = { ...cfgDefaults }
         if (!('bienvenida' in global.db.data.chats[m.chat]) && ('welcome' in cfgDefaults)) global.db.data.chats[m.chat].bienvenida = !!cfgDefaults.welcome
+        // SISTEMA PRIMARY BOT - INICIALIZACIÓN
+        global.db.data.chats[m.chat].primaryBot = null
       }
       const botIdKey = this.user?.jid || (this.user?.id ? this.decodeJid(this.user.id) : 'bot')
       var settings = global.db.data.settings[botIdKey]
@@ -326,16 +357,28 @@ export async function handler(chatUpdate) {
     const isAllowed = allowedBots.includes(this.user.jid)
     if (isSubbs && !isAllowed) return
 
-    //sistema botprimario
+    // SISTEMA PRIMARY BOT MEJORADO
     if (m.isGroup) {
         const chat = global.db.data.chats[m.chat];
-        if (chat?.primaryBot) {
-            const universalWords = ['resetbot', 'resetprimario', 'botreset'];
+        if (chat?.primaryBot && chat.primaryBot !== this.user.jid) {
+            const universalWords = ['resetbot', 'resetprimario', 'botreset', 'setprimary', 'primary', 'unprimary', 'primarybot'];
             const firstWord = m.text ? m.text.trim().split(' ')[0].toLowerCase().replace(/^[./#]/, '') : '';
 
             if (!universalWords.includes(firstWord)) {
-                if (this?.user?.jid !== chat.primaryBot) {
-                    return;
+                // Verificar si el primary bot está conectado y en el grupo
+                try {
+                    const groupMetadata = await this.groupMetadata(m.chat).catch(() => null);
+                    const primaryBotInGroup = groupMetadata?.participants?.some(p => p.id === chat.primaryBot);
+                    
+                    if (primaryBotInGroup) {
+                        return; // Ignorar comando si el primary bot está en el grupo
+                    } else {
+                        // Si el primary bot no está en el grupo, limpiar la configuración
+                        chat.primaryBot = null;
+                    }
+                } catch (error) {
+                    console.error('Error verificando primary bot:', error);
+                    chat.primaryBot = null; // Limpiar en caso de error
                 }
             }
         }
@@ -448,12 +491,12 @@ export async function handler(chatUpdate) {
         try {
             const normalizedJid = normalizeJid(jid);
             if (!normalizedJid) return null;
-            
+
             const user = global.db.data.users[normalizedJid];
             const name = await nameOf(normalizedJid);
             const roles = await roleFor(normalizedJid);
             const badges = await badgeFor(normalizedJid);
-            
+
             return {
                 jid: normalizedJid,
                 name: name || prettyNum(normalizedJid),
