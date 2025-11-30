@@ -1,8 +1,9 @@
+// balance.js - Comando de Balance
 let handler = async (m, { conn, usedPrefix }) => {
   const currency = global.currency || 'Yenes'
 
   if (!global.db.data.chats[m.chat].economy && m.isGroup) {
-    return conn.reply(m.chat, '> \\`🚫 ECONOMIA DESACTIVADA\\`\n\n> \\`❌ Los comandos de economía están desactivados en este grupo\\`\n\n> \\`📝 Administrador activa con:\\`\n> \\`' + usedPrefix + 'economy on\\`\n\n> \\`📚 "No puedo revisar tu balance si la economía está desactivada..."\\`', m)
+    return conn.reply(m.chat, '❌ \\`ECONOMIA DESACTIVADA\\`\n\n🚫 \\`Los comandos de economía están desactivados en este grupo\\`\n\n📝 \\`Administrador activa con:\\`\n' + usedPrefix + 'economy on\n\n📚 \\`"No puedo revisar tu balance si la economía está desactivada..."\\`', m)
   }
 
   let mentionedJid = await m.mentionedJid
@@ -17,7 +18,7 @@ let handler = async (m, { conn, usedPrefix }) => {
   })())()
 
   if (!(who in global.db.data.users)) {
-    return conn.reply(m.chat, '> \\`❌ USUARIO NO ENCONTRADO\\`\n\n> \\`🍙 Este usuario no está registrado en mi base de datos\\`\n\n> \\`📚 "Debe usar el bot primero para registrarse..."\\`', m)
+    return conn.reply(m.chat, '❌ \\`USUARIO NO ENCONTRADO\\`\n\n🚫 \\`Este usuario no está registrado en mi base de datos\\`\n\n📚 \\`"Debe usar el bot primero para registrarse..."\\`', m)
   }
 
   let user = global.db.data.users[who]
@@ -25,17 +26,17 @@ let handler = async (m, { conn, usedPrefix }) => {
   let bank = user.bank || 0
   let total = coin + bank
 
-  const texto = '> \\`💰 BALANCE ECONOMICO\\` 📚✨\n\n' +
-                '> \\`👤 Información del Usuario:\\`\n' +
-                '> \\`📝 Nombre:\\` *' + name + '*\n\n' +
-                '> \\`📊 Estado Financiero:\\`\n' +
-                '> \\`👛 Cartera:\\` *¥' + coin.toLocaleString() + '* ' + currency + '\n' +
-                '> \\`🏦 Banco:\\` *¥' + bank.toLocaleString() + '* ' + currency + '\n' +
-                '> \\`💴 Total:\\` *¥' + total.toLocaleString() + '* ' + currency + '\n\n' +
-                (coin > bank ? '> \\`⚠️ Advertencia:\\` *Tienes mucho dinero en tu cartera*' : '> \\`✅ Excelente:\\` *Tu dinero está bien protegido*') + '\n\n' +
-                '> \\`🍱 Consejo de Itsuki:\\`\n' +
-                '> \\`📚 "Para proteger tu dinero, ¡deposítalo en el banco!"\\`\n\n' +
-                '> \\`📝 Usa:\\` *' + usedPrefix + 'deposit <cantidad>*'
+  const texto = '💰 \\`BALANCE ECONOMICO\\`\n\n' +
+                '👤 \\`Información del Usuario:\\`\n' +
+                '📝 \\`Nombre:\\` *' + name + '*\n\n' +
+                '📊 \\`Estado Financiero:\\`\n' +
+                '👛 \\`Cartera:\\` *¥' + coin.toLocaleString() + '* ' + currency + '\n' +
+                '🏦 \\`Banco:\\` *¥' + bank.toLocaleString() + '* ' + currency + '\n' +
+                '💴 \\`Total:\\` *¥' + total.toLocaleString() + '* ' + currency + '\n\n' +
+                (coin > bank ? '⚠️ \\`Advertencia:\\` *Tienes mucho dinero en tu cartera*' : '✅ \\`Excelente:\\` *Tu dinero está bien protegido*') + '\n\n' +
+                '🍱 \\`Consejo de Itsuki:\\`\n' +
+                '📚 \\`"Para proteger tu dinero, ¡deposítalo en el banco!"\\`\n\n' +
+                '📝 \\`Usa:\\` *' + usedPrefix + 'deposit <cantidad>*'
 
   await conn.reply(m.chat, texto, m)
 }
@@ -44,5 +45,4 @@ handler.help = ['bal']
 handler.tags = ['economy']
 handler.command = ['bal', 'balance', 'bank'] 
 handler.group = true 
-
 export default handler
