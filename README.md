@@ -16,20 +16,3 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18+-32CD32.svg?style=for-the-badge&logo=node.js)]()
 
 </div>
-
-## `🎯 Características Principales`
-
-  <div align="center">
-
-| 🌟 Función | 🚀 Descripción |
-|------------|----------------|
-| 🎵 **11 Sistemas de Descarga** | Audio/Video en calidad premium |
-| ⚡ **Multi-Prefijo Avanzado** | 20+ símbolos diferentes |
-| 💰 **Economía Completa** | Trabajos, bancos, Gacha system |
-| 🖼️ **Calidad HD/4K** | Máxima calidad en medios |
-| 🔧 **Handler Profesional** | Optimizado y estable |
-| 📁 **Simple.js** | Desarrollo fácil y organizado |
-
-</div>
-
-## `🎨 Novedades Exclusivas V6.4.1`
