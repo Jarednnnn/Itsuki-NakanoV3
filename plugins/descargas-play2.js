@@ -51,8 +51,7 @@ let handler = async (m, { conn, text, usedPrefix }) => {
   }    
 
   try {    
-    await m.react('🔍')
-    await conn.reply(m.chat, '> `🔎🎬 Itsuki está buscando tu video` 🍙', m, ctxOk)    
+    await m.react('🕑')
 
     const searchResults = await yts(text)    
     if (!searchResults.videos.length) {
