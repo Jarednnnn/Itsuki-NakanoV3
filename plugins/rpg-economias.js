@@ -434,7 +434,7 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
     }
 
     // COMANDO WORK
-    if (command === 'work' || command === 'trabajar') {
+    if (command === 'w' || command === 'trabajar') {
       let user = global.db.data.users[m.sender];
       const cooldown = 2 * 60 * 1000;
 
@@ -776,7 +776,7 @@ handler.command = [
   'cofre', 'coffer',
   'baltop', 'top',
   'crimen', 'crime', 'accion',
-  'work', 'trabajar',
+  'w', 'trabajar',
   'deposit', 'depositar', 'd', 'dep',
   'pay', 'coinsgive', 'givecoins', 'transferir'
 ];
