@@ -1214,8 +1214,7 @@ global.conn.ev.on('group-participants.update', async (update) => {
 │ ├ 🔢 Número: ${userNumber}
 │ ├ 🌍 País: ${deteccion.nombre}
 │ ├ 📍 Región: ${deteccion.region}
-│ ├ ⏰ Hora: ${new Date().toLocaleTimeString()}
-│ └ 🚫 Acción: Expulsado automáticamente
+│ └ 🍃 Acción: Expulsado automáticamente
 │ 
 │ ⚙️ *Sistema activo:*
 │ ├ Anti-Árabe: ✅ ACTIVADO
