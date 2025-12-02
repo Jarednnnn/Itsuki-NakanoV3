@@ -36,9 +36,8 @@ if (typeof global.__dirname !== 'function') {
 const CURRENT_DIR = path.dirname(fileURLToPath(import.meta.url));
 
 // === DEFINIR OWNER GLOBAL ===
-// Agrega esta línea para definir el owner
-global.owner = ['573187418668@s.whatsapp.net']; // Tu número en formato JID
-global.roowner = ['573187418668']; // Tu número para referencia
+global.owner = ['573187418668@s.whatsapp.net'];
+global.roowner = ['573187418668'];
 
 const { proto } = (await import("@whiskeysockets/baileys")).default
 const isNumber = x => typeof x === "number" && !isNaN(x)
@@ -754,26 +753,7 @@ export async function handler(chatUpdate) {
     const chat = global.db.data.chats[m.chat]
     const settings = global.db.data.settings[this.user.jid]
 
-    // === SISTEMA ROOTOWNER - VERIFICACIÓN INICIAL ===
-    // Si rootowner está activado y el usuario NO es el owner, ignorar todos los mensajes
-    if (chat?.rootowner && !isROwner) {
-      console.log(`🚫 RootOwner activado: Ignorando mensaje de ${m.sender} en ${m.chat}`)
-      return // Ignorar completamente el mensaje
-    }
-
-    if (m.message && m.key.remoteJid.endsWith('@g.us') && chat?.antiArabe) {
-      try {
-        console.log(`🔍 Verificando anti-árabe para usuario: ${m.sender}`)
-        const fueExpulsado = await verificarAntiArabe(this, m)
-        if (fueExpulsado) {
-          return
-        }
-      } catch (error) {
-        console.error('Error en sistema anti-árabe:', error)
-      }
-    }
-
-    // === CORRECCIÓN DE isROwner ===
+    // === CORRECCIÓN: DEFINIR isROwner ANTES DE USARLO ===
     const ownerNumbers = global.owner || global.roowner || []
     const isROwner = Array.isArray(ownerNumbers) 
       ? ownerNumbers.some(owner => {
@@ -786,6 +766,25 @@ export async function handler(chatUpdate) {
       : false
 
     const isOwner = isROwner || m.fromMe
+
+    // === AHORA SÍ PUEDES VERIFICAR ROOTOWNER ===
+    if (chat?.rootowner && !isROwner) {
+      console.log(`🚫 RootOwner activado: Ignorando mensaje de ${m.sender} en ${m.chat}`)
+      return // Ignorar completamente el mensaje
+    }
+
+    // === CONTINÚA CON EL RESTO DEL CÓDIGO ===
+    if (m.message && m.key.remoteJid.endsWith('@g.us') && chat?.antiArabe) {
+      try {
+        console.log(`🔍 Verificando anti-árabe para usuario: ${m.sender}`)
+        const fueExpulsado = await verificarAntiArabe(this, m)
+        if (fueExpulsado) {
+          return
+        }
+      } catch (error) {
+        console.error('Error en sistema anti-árabe:', error)
+      }
+    }
 
     // === CORRECCIÓN DE isPrems ===
     const premNumbers = global.prems || []
@@ -1224,7 +1223,7 @@ global.dfail = (type, m, conn) => {
     private: '> `ⓘ ᥱs𝗍ᥱ ᥴ᥆mᥲᥒძ᥆ s᥆ᥣ᥆ sᥱ ⍴ᥙᥱძᥱ ᥙsᥲr ᥲᥴ һᥲ𝗍 ⍴rі᥎ᥲძ᥆ ძᥱᥣ ᑲ᥆𝗍.`',
     admin: '> `ⓘ ᥱs𝗍ᥱ ᥴ᥆mᥲᥒძ᥆ s᥆ᥣ᥆ ᥱs ⍴ᥲrᥲ ᥲძmіᥒs ძᥱᥣ grᥙ⍴᥆.`',
     botAdmin: '> `ⓘ ⍴ᥲrᥲ ⍴᥆ძᥱr ᥙsᥲr ᥱs𝗍ᥱ ᥴ᥆mᥲᥒძ᥆ ᥱs ᥒᥱᥴᥱsᥲrі᥆ 𝗊ᥙᥱ ᥡ᥆ sᥱᥲ ᥲძmіᥒ.`',
-    unreg: `> \`ⓘ ᥒᥱᥴᥱsі𝗍ᥲs ᥱs𝗍ᥲr rᥱgіs𝗍rᥲძ᥆(ᥲ) ⍴ᥲrᥲ ᥙsᥲr ᥱs𝗍ᥱ ᥴ᥆mᥲᥒძ᥆, ᥱsᥴrіᑲᥱ #rᥱg ⍴ᥲrᥲ rᥱgіs𝗍rᥲr𝗍ᥱ.\``,
+    unreg: `> \`ⓘ ᥒᥱᥴᥱsі𝗍ᥲs ᥱs𝗍ᥲr rᥱgіs𝗍rᥲძ᥆(ᥲ) ⍴ᥲrᥲ ᥙsᥲr ᥱs𝗍ᥱ ᥴ᥆mᥲᥒძ᥆, ᥱsᥴrіᑲ᥆ #rᥱg ⍴ᥲrᥲ rᥱgіs𝗍rᥲr𝗍ᥱ.\``,
     restrict: '> `ⓘ ᥴ᥆mᥲᥒძ᥆ rᥱs𝗍rіᥒgіძ᥆ ⍴᥆r ძᥱᥴіsі᥆ᥒ ძᥱᥣ ⍴r᥆⍴іᥱ𝗍ᥲrі᥆ ძᥱᥣ ᑲ᥆𝗍.`'
   }[type];
 
