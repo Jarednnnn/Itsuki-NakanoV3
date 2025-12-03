@@ -25,7 +25,7 @@
  <img src="https://github.com/BrayanOFC-Li/Lines-Neon-MB/raw/main/assets_MB/line-neon.gif" width="400"/>
 </p>
 
-### **`𝗧𝗼𝗰𝗮 𝗟𝗮 𝗜𝗺𝗮𝗴𝗲𝗻 𝗣𝗮𝗿𝗮 𝗗𝗲𝘀𝗰𝗮𝗿𝗴𝗮𝗿 𝗧𝗲𝗿𝗺𝘂𝘅 𝗔𝗰𝘁𝘂𝗮𝗹𝗶𝘇𝗮𝗱𝗼 🌱`**
+### **`𝗧𝗼𝗰𝗮 𝗟𝗮 𝗜𝗺𝗮𝗴𝗲𝗻 𝗣𝗮𝗿𝗮 𝗗𝗲𝘀𝗰𝗮𝗿𝗴𝗮𝗿 𝗧𝗲𝗿𝗺𝘂𝘅 𝗔𝗰𝘁𝘂𝗮𝗹𝗶𝘇𝗮𝗱𝗼⚙️`**
 <a
 href="https://www.mediafire.com/file/wkinzgpb0tdx5qh/com.termux_1022.apk/file"><img src="https://qu.ax/uYEOh.jpg" height="125px"></a> 
 
