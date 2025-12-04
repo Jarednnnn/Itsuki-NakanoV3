@@ -124,7 +124,7 @@ try {
   const { say } = cfonts
   const botDisplayName = (config && (config.botName || config.name || global.namebot)) || 'Bot'
   console.log(chalk.magentaBright(`\n🌱Iniciando ${botDisplayName}...`))
-  say('', { font: 'simple', align: 'left', gradient: ['green','white'] })
+  say('ItsukiV3', { font: 'simple', align: 'left', gradient: ['green','white'] })
   say('Powered by leo 👑', { font: 'console', align: 'center', colors: ['cyan','magenta','yellow'] })
   try { protoType() } catch {}
   try { serialize() } catch {}
