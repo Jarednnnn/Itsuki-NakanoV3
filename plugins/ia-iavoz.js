@@ -3,7 +3,7 @@ import fetch from 'node-fetch'
 let handler = async (m, { conn, text }) => {
   if (!text) return m.reply('[💖] Escribe algo para hablar con IA.')
 
-  const url = `https://api-adonix.ultraplus.click/ai/iavoz?apikey=${global.apikey}&q=${encodeURIComponent(text)}&voice=Esperanza`
+  const url = `https://api-adonix.ultraplus.click/ai/iavoz?apikey=${global.apikey}&q=${encodeURIComponent(text)}&voice=Antonio`
 
   try {
     const res = await fetch(url)
