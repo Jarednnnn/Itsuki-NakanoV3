@@ -6,14 +6,13 @@ import moment from 'moment-timezone'
 var handler = m => m
 handler.all = async function (m) { 
 
-  // Canales (sin links para que su majestad los ponga luego)
+  // Canales (ID y Nombre del Canal de WhatsApp para la función "getRandomChannel")
+  // ID de tu canal: 0029Va4K0PZ5a245NkngBA2M, con el sufijo @newsletter
   global.canalIdM = [
-    "0029Va4K0PZ5a245NkngBA2M@newsletter",
-    "0029Va4K0PZ5a245NkngBA2M@newsletter",
+    "0029Va4K0PZ5a245NkngBA2M@newsletter" // <--- TU ID ALFANUMÉRICO SIN COMAS
   ]
   global.canalNombreM = [
-    "Imperio de Britannia ┇ Noticias",
-    "Lelouch vi Britannia ┇ Comunicados"
+    "Lelouch vi Britannia ┇ Comunicados" // <--- NOMBRE DE TU CANAL
   ]
   global.channelRD = await getRandomChannel()
 
@@ -76,9 +75,9 @@ handler.all = async function (m) {
     contextInfo: { 
       isForwarded: true, 
       forwardedNewsletterMessageInfo: { 
-        newsletterJid: channelRD.id, 
+        newsletterJid: global.channelRD.id, // Usa el ID de la variable cargada
         serverMessageId: '', 
-        newsletterName: channelRD.name 
+        newsletterName: global.channelRD.name // Usa el nombre de la variable cargada
       }, 
       externalAdReply: { 
         title: "Lelouch vi Britannia",
@@ -87,7 +86,7 @@ handler.all = async function (m) {
         description: null, 
         previewType: "PHOTO", 
         thumbnailUrl: global.icono,
-        sourceUrl: '', 
+        sourceUrl: '', // Si el canal tiene un link, a veces va aquí, pero lo dejamos vacío para usar el JID
         mediaType: 1, 
         renderLargerThumbnail: false 
       }
@@ -107,11 +106,22 @@ function pickRandom(list) {
   return list[Math.floor(Math.random() * list.length)]
 }
 
+// Función que selecciona un canal aleatorio de las listas
 async function getRandomChannel() {
+  // Verificamos si los arrays de canales están definidos y tienen elementos
+  if (!global.canalIdM || global.canalIdM.length === 0 || !global.canalNombreM || global.canalNombreM.length === 0) {
+      // Si no hay canales, devolvemos un objeto vacío para evitar errores
+      return { id: '', name: 'Canal no configurado' }; 
+  }
+
   let randomIndex = Math.floor(Math.random() * global.canalIdM.length)
   let id = global.canalIdM[randomIndex]
   let name = global.canalNombreM[randomIndex]
-  return { id, name }
+  
+  // Aseguramos que el ID tenga el sufijo @newsletter (aunque ya lo pusiste bien)
+  let fullId = id.includes("@newsletter") ? id : id + "@newsletter" 
+  
+  return { id: fullId, name } 
 }
 
 if (!Array.prototype.getRandom) {
