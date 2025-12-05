@@ -25,7 +25,7 @@ class Copilot {
 
     async chat(message, { model = 'default' } = {}) {
         if (!this.conversationId) await this.createConversation()
-        if (!this.models[model]) throw new Error(`Available models: ${Object.keys(this.models).join(', ')}`)
+        if (!this.models[model]) throw new Error(`Modelos disponibles: ${Object.keys(this.models).join(', ')}`)
         return new Promise((resolve, reject) => {
             const ws = new WebSocket(`wss://copilot.microsoft.com/c/api/chat?api-version=2&features=-,ncedge,edgepagecontext&setflight=-,ncedge,edgepagecontext&ncedge=1`, { headers: this.headers })
             const response = { text: '', citations: [] }
@@ -72,13 +72,29 @@ class Copilot {
     }
 }
 
-let handler = async (m, { command, text }) => {
+let handler = async (m, { command, text, conn, usedPrefix }) => {
+    // Definiciones de contexto (asumo que existen globalmente)
+    const ctxErr = (global.rcanalx || {})
+    const ctxOk = (global.rcanalr || {})
+
     try {
-        if (!text) return m.reply(`*Ejemplo :* .${command} ¿Qué es Nodejs?`)
+        if (!text) {
+            await conn.sendMessage(m.chat, { react: { text: 'X', key: m.key } })
+            return conn.reply(m.chat, `ATENCIÓN. Se requiere una consulta para la ejecución de ${command}.
+*DIRECTRIZ:* Formule su pregunta.
+*Ejemplo:* ${usedPrefix + command} ¿Cuál es el código Geass?`, m, ctxErr)
+        }
+        
+        // Indicador de "Procesando"
+        await conn.sendMessage(m.chat, { react: { text: '💭', key: m.key } })
+        await conn.sendPresenceUpdate('composing', m.chat)
+
         let copilot = new Copilot()
         let model
         switch (command) {
             case 'copilot':
+            case 'ai':
+            case 'ia':
                 model = 'default'
             break
             case 'copilot-think':
@@ -91,15 +107,23 @@ let handler = async (m, { command, text }) => {
                 model = 'default'
             break
         }
+        
         let res = await copilot.chat(text, { model })
-        await m.reply(res.text.trim())
+        
+        // Respuesta y Notificación de éxito: ✅
+        await conn.reply(m.chat, `*EJECUCIÓN DEL PROTOCOLO ${model.toUpperCase()} COMPLETADA*\n\n${res.text.trim()}`, m, ctxOk)
+        await conn.sendMessage(m.chat, { react: { text: '✅', key: m.key } })
+
     } catch (e) {
-        m.reply(e.message)
+        // Notificación de error: X
+        await conn.sendMessage(m.chat, { react: { text: 'X', key: m.key } })
+        conn.reply(m.chat, `ERROR CRÍTICO: Fallo en el enlace con el sistema externo.
+*Detalles del Fallo:* ${e.message}`, m, ctxErr)
     }
 }
 
-handler.help = ['copilot']
-handler.command = ['copilot']
+handler.help = ['copilot', 'copilot-think', 'gpt-5']
+handler.command = ['copilot', 'copilot-think', 'gpt-5']
 handler.tags = ['ia']
 
 export default handler
