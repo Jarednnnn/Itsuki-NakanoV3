@@ -29,11 +29,11 @@ let handler = async (m, { conn, usedPrefix }) => {
 ┃  ⓘ REGISTRO DE COMANDOS ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
-Órdenes disponibles: ${totalCommands}
+Comandos disponibles: ${totalCommands}
 
 Usa ${usedPrefix}menu para acceder al registro completo.
 
-"Un líder sin órdenes es como un ejército sin general."
+"Ara te amo :3."
 `.trim()
 
     await conn.reply(m.chat, message, m, ctxOk)
