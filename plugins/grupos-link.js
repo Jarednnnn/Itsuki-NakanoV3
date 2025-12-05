@@ -10,16 +10,16 @@ let handler = async (m, { conn, isBotAdmin }) => {
     const groupCode = await conn.groupInviteCode(m.chat)
     const inviteLink = `https://chat.whatsapp.com/${groupCode}`
     
-    // Mensaje con botón interactivo para copiar
+    // Mensaje con botón interactivo
     const msg = generateWAMessageFromContent(m.chat, {
       viewOnceMessage: {
         message: {
           interactiveMessage: proto.Message.InteractiveMessage.create({
             body: proto.Message.InteractiveMessage.Body.create({
-              text: "> ⓘ `Enlace del grupo`\n\n> *copia el link del grupo aqui ⬇️*"
+              text: "┏━━━━━━━━━━━━━━━━━━━━━┓\n┃  ⓘ ENLACE DEL GRUPO ┃\n┗━━━━━━━━━━━━━━━━━━━━━┛\n\n> Copia el enlace del grupo aquí ⬇️"
             }),
             footer: proto.Message.InteractiveMessage.Footer.create({ 
-              text: "ᴘᴜʟsᴀ ᴇʟ ʙᴏᴛᴏɴ ᴘᴀʀᴀ ᴄᴏᴘɪᴀʀ" 
+              text: "Pulsa el botón para copiar" 
             }),
             header: proto.Message.InteractiveMessage.Header.create({ 
               hasMediaAttachment: false 
