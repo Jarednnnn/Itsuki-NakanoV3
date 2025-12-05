@@ -35,72 +35,72 @@ function isNumber(x) {
   return !isNaN(x);
 }
 
-// Arrays para eventos aleatorios - MÁS OPCIONES
+// Arrays para eventos - PERSONALIDAD LELOUCH
 const cofres = [
-  "> `🌸 Has encontrado un cofre antiguo decorado con flores de cerezo.`",
-  "> `🎀 Descubriste un cofre mágico de Itsuki Nakano lleno de tesoros.`",
-  "> `📚 Te topaste con un cofre de estudio con monedas para libros.`",
-  "> `🍱 Encontraste un cofre de bento especial con recompensas.`",
-  "> `✨ Un cofre brillante apareció con regalos de Itsuki.`",
-  "> `🎓 Cofre académico con premios por excelencia estudiantil.`",
-  "> `🏮 Cofre tradicional con monedas del festival escolar.`",
-  "> `📖 Cofre literario con recompensas de sabiduría.`"
+  "> ⓘ `Has descubierto un cofre imperial abandonado. Una oportunidad que solo los astutos aprovechan.`",
+  "> ⓘ `Un cofre del viejo imperio yace ante ti. El destino favorece a quien lo reclama primero.`",
+  "> ⓘ `Encontraste recursos olvidados de una antigua campaña militar. Excelente timing.`",
+  "> ⓘ `Un depósito secreto ha sido revelado. Como esperaba, estabas en el lugar correcto.`",
+  "> ⓘ `Has localizado un tesoro táctico escondido. Tu perspicacia ha dado frutos.`",
+  "> ⓘ `Recursos estratégicos descubiertos. Justo lo necesario para continuar con el plan.`",
+  "> ⓘ `Un cofre de guerra olvidado emerge de las sombras. Todo según lo calculado.`",
+  "> ⓘ `Has interceptado suministros imperiales abandonados. Eficiencia admirable.`"
 ];
 
 const crimen = [
-  { tipo: 'victoria', mensaje: "> `📚 Usaste tus conocimientos para hackear un cajero automático con un exploit del sistema y retiraste efectivo sin alertas`" },
-  { tipo: 'victoria', mensaje: "> `📖 Te infiltraste como tutora académica en una mansión y aprovechaste para tomar joyas mientras dabas clases`" },
-  { tipo: 'victoria', mensaje: "> `💻 Creaste un software de minería de criptomonedas y obtuviste ganancias silenciosas`" },
-  { tipo: 'victoria', mensaje: "> `🎭 Te hiciste pasar por inspector educativo y robaste fondos de una escuela privada`" },
-  { tipo: 'victoria', mensaje: "> `🔐 Descifraste la contraseña de una cuenta bancaria y transferiste fondos a tus cuentas`" },
-  { tipo: 'victoria', mensaje: "> `📊 Manipulaste los registros de la biblioteca para vender libros raros en el mercado negro`" },
-  { tipo: 'victoria', mensaje: "> `💳 Clonaste tarjetas de crédito de compañeros adinerados`" },
-  { tipo: 'victoria', mensaje: "> `🏦 Desviaste fondos de una beca estudiantil a tu cuenta`" },
-  { tipo: 'victoria', mensaje: "> `📱 Hackeaste una app de pagos y transferiste dinero`" },
-  { tipo: 'victoria', mensaje: "> `🎯 Robaste exámenes finales y los vendiste a otros estudiantes`" },
-  { tipo: 'derrota', mensaje: "> `📚 Intentaste falsificar un certificado pero el papel y sello eran de mala calidad, te descubrieron`" },
-  { tipo: 'derrota', mensaje: "> `📖 Trataste de hackear un sistema escolar pero olvidaste ocultar tu IP y fuiste rastreada`" },
-  { tipo: 'derrota', mensaje: "> `💸 Quisiste estafar con una beca falsa pero la víctima era un policía encubierto`" },
-  { tipo: 'derrota', mensaje: "> `🔍 Intentaste robar exámenes pero el profesor te estaba vigilando`" },
-  { tipo: 'derrota', mensaje: "> `🏫 Planearas un robo en la cafetería pero te atraparon las cámaras de seguridad`" },
-  { tipo: 'derrota', mensaje: "> `📉 Tu esquema de inversión fraudulenta fue descubierto por las autoridades`" },
-  { tipo: 'derrota', mensaje: "> `🚔 La policía te atrapó intentando hackear el sistema bancario`" },
-  { tipo: 'derrota', mensaje: "> `🔒 Fallaste al intentar abrir una caja fuerte en la oficina del director`" },
-  { tipo: 'derrota', mensaje: "> `📹 Te grabaron robando material de laboratorio costoso`" },
-  { tipo: 'derrota', mensaje: "> `💀 Casi te atrapan vendiendo respuestas de exámenes falsas`" }
+  { tipo: 'victoria', mensaje: "> ⓘ `Infiltraste el sistema bancario con precisión quirúrgica. Fondos transferidos sin dejar rastro.`" },
+  { tipo: 'victoria', mensaje: "> ⓘ `Manipulaste las acciones del mercado a tu favor. Como siempre, todo salió según el plan.`" },
+  { tipo: 'victoria', mensaje: "> ⓘ `Ejecutaste un esquema Ponzi perfecto con inversionistas ingenuos. Brillante ejecución.`" },
+  { tipo: 'victoria', mensaje: "> ⓘ `Hackeaste la red corporativa y vendiste información clasificada. Estrategia impecable.`" },
+  { tipo: 'victoria', mensaje: "> ⓘ `Orquestaste un fraude de seguros sin precedentes. Magistralmente planeado.`" },
+  { tipo: 'victoria', mensaje: "> ⓘ `Desviaste fondos gubernamentales usando ingeniería social avanzada. Como predije.`" },
+  { tipo: 'victoria', mensaje: "> ⓘ `Clonaste tarjetas de crédito de ejecutivos en una conferencia. Demasiado fácil.`" },
+  { tipo: 'victoria', mensaje: "> ⓘ `Falsificaste documentos de alta seguridad y vendiste acceso VIP. Perfección absoluta.`" },
+  { tipo: 'victoria', mensaje: "> ⓘ `Chantajeaste a un político corrupto con información comprometedora. Jaque mate.`" },
+  { tipo: 'victoria', mensaje: "> ⓘ `Infiltraste una subasta ilegal y robaste obras de arte invaluables. Obra maestra.`" },
+  { tipo: 'derrota', mensaje: "> ⓘ `Tu esquema fue descubierto por un analista más astuto de lo esperado. Calculé mal.`" },
+  { tipo: 'derrota', mensaje: "> ⓘ `Las cámaras de seguridad capturaron tu rostro. Un error imperdonable de mi parte.`" },
+  { tipo: 'derrota', mensaje: "> ⓘ `La víctima resultó ser un agente encubierto. No anticipé esa variable.`" },
+  { tipo: 'derrota', mensaje: "> ⓘ `Tu red de lavado de dinero fue rastreada por Interpol. Subestimé su capacidad.`" },
+  { tipo: 'derrota', mensaje: "> ⓘ `El sistema de seguridad era más avanzado de lo previsto. Debo recalcular.`" },
+  { tipo: 'derrota', mensaje: "> ⓘ `Un testigo inesperado arruinó tu operación perfecta. Variables imprevistas.`" },
+  { tipo: 'derrota', mensaje: "> ⓘ `Tu cómplice te traicionó y alertó a las autoridades. Confié en la persona equivocada.`" },
+  { tipo: 'derrota', mensaje: "> ⓘ `El firewall adaptativo neutralizó tu ataque cibernético. Tecnología impresionante.`" },
+  { tipo: 'derrota', mensaje: "> ⓘ `La policía tendió una trampa y caíste directo en ella. Me superaron esta vez.`" },
+  { tipo: 'derrota', mensaje: "> ⓘ `Tu identidad falsa fue comprometida por reconocimiento facial. Error táctico crítico.`" }
 ];
 
-const trabajoItsuki = [
-  "> `📚 Estudié diligentemente para mis exámenes y gané`",
-  "> `🏪 Ayudé en la librería familiar y recibí`",
-  "> `📝 Escribí un ensayo académico excelente y me pagaron`",
-  "> `📂 Organicé mis apuntes de estudio y encontré`",
-  "> `👨‍🏫 Di clases particulares a estudiantes más jóvenes y gané`",
-  "> `🏆 Participé en un concurso académico y gané`",
-  "> `📖 Vendí algunos de mis libros de texto viejos y obtuve`",
-  "> `🎵 Ayudé a Miku con sus estudios y me dio`",
-  "> `📚 Trabajé como asistente en biblioteca y gané`",
-  "> `✍️ Escribí reseñas de libros y recibí`",
-  "> `🍱 Preparé bentos para mis hermanas y me pagaron`",
-  "> `🎨 Diseñé material de estudio visual y lo vendí`",
-  "> `🔬 Ayudé en el laboratorio de ciencias y gané`",
-  "> `📊 Creé bases de datos de estudio y las comercialicé`",
-  "> `🎭 Participé en una obra teatral escolar y me pagaron`",
-  "> `🏅 Gané una competencia de matemáticas y recibí`",
-  "> `📻 Fui invitada a un programa de radio académico y gané`",
-  "> `💡 Desarrollé una app de estudio y obtuve`",
-  "> `🎯 Di un seminario sobre técnicas de estudio y recibí`",
-  "> `📈 Asesoré a empresas en estrategias educativas y gané`",
-  "> `🎓 Di tutorías para exámenes de admisión y recibí`",
-  "> `🏫 Organicé un club de estudio y me pagaron`",
-  "> `💼 Trabajé como investigadora asistente y gané`",
-  "> `📋 Corregí exámenes para profesores y recibí`",
-  "> `🎪 Participé en una feria científica y obtuve`",
-  "> `📚 Traduje textos académicos y me pagaron`",
-  "> `🏛️ Di una conferencia en la universidad y gané`",
-  "> `🔍 Investigué para un proyecto histórico y recibí`",
-  "> `📖 Escribí un libro de texto y obtuve regalías`",
-  "> `🎓 Me gradué con honores y recibí una beca`"
+const trabajoLelouch = [
+  "> ⓘ `Planifiqué una estrategia militar avanzada y recibí compensación por mis servicios tácticos`",
+  "> ⓘ `Asesoré a líderes políticos en maniobras de poder. Mi expertise vale oro`",
+  "> ⓘ `Dicté una conferencia sobre teoría del juego aplicada a conflictos. Conocimiento es poder`",
+  "> ⓘ `Vendí análisis de inteligencia a corporaciones multinacionales. Información privilegiada`",
+  "> ⓘ `Consulté en estrategias de negociación de alto nivel. Mi experiencia habla por sí misma`",
+  "> ⓘ `Diseñé un plan de contingencia para una operación clasificada. Trabajo impecable`",
+  "> ⓘ `Impartí entrenamiento táctico a fuerzas especiales. Mi reputación me precede`",
+  "> ⓘ `Audité sistemas de seguridad nacional y encontré 47 vulnerabilidades críticas`",
+  "> ⓘ `Negocié un tratado comercial entre dos naciones rivales. Diplomacia es mi especialidad`",
+  "> ⓘ `Desarrollé un algoritmo de predicción de mercados financieros. Matemática pura`",
+  "> ⓘ `Organicé una cumbre secreta entre líderes mundiales. Conexiones son cruciales`",
+  "> ⓘ `Redacté legislación para reforma gubernamental. Mi visión se materializa`",
+  "> ⓘ `Entrené agentes en operaciones encubiertas. Solo los mejores sobreviven`",
+  "> ⓘ `Diseñé protocolos de ciberseguridad para infraestructura crítica. Defensa absoluta`",
+  "> ⓘ `Medié en un conflicto internacional evitando una guerra. La paz también es estrategia`",
+  "> ⓘ `Publiqué un tratado sobre teoría de la revolución. Mi legado intelectual crece`",
+  "> ⓘ `Coordiné operaciones logísticas para misión humanitaria. Eficiencia sin igual`",
+  "> ⓘ `Analicé patrones geopolíticos para agencias de inteligencia. Visión de águila`",
+  "> ⓘ `Establecí redes diplomáticas entre cinco continentes. Mi influencia se expande`",
+  "> ⓘ `Supervisé simulaciones de crisis para gobiernos. Preparación es victoria`",
+  "> ⓘ `Decodifiqué comunicaciones encriptadas de organizaciones clandestinas. Nada me es oculto`",
+  "> ⓘ `Reestructuré la cadena de mando de una fuerza militar. Jerarquía optimizada`",
+  "> ⓘ `Formulé contramedidas ante amenazas terroristas emergentes. Siempre un paso adelante`",
+  "> ⓘ `Lideré un think tank sobre el futuro de la guerra moderna. El futuro me pertenece`",
+  "> ⓘ `Ejecuté una operación psicológica que cambió la opinión pública. Control maestro`",
+  "> ⓘ `Infiltré y desmantelé una red de espionaje industrial. Misión cumplida`",
+  "> ⓘ `Programé inteligencia artificial para análisis predictivo militar. Tecnología suprema`",
+  "> ⓘ `Consolidé alianzas estratégicas entre corporaciones globales. El tablero es mío`",
+  "> ⓘ `Gané el torneo internacional de ajedrez contra grandes maestros. Victoria intelectual absoluta`",
+  "> ⓘ `Completé una operación encubierta sin bajas ni testigos. Perfección táctica total`"
 ];
 
 // ==================== HANDLER PRINCIPAL ====================
@@ -113,17 +113,16 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
     // Verificar si es grupo
     if (!m.isGroup) {
       await m.react('❌')
-      return conn.reply(m.chat, '> `🚫 Este comando solo funciona en grupos.`', m, ctxErr);
+      return conn.reply(m.chat, '> ⓘ `Este sistema solo opera en grupos. Protocolo estándar.`', m, ctxErr);
     }
 
     // COMANDO ECONOMY
     if (command === 'economy' || command === 'economia') {
       if (!isAdmin) {
         await m.react('⚠️')
-        return conn.reply(m.chat, '> `⚠️ Necesitas ser administrador.`', m, ctxErr);
+        return conn.reply(m.chat, '> ⓘ `Necesitas autoridad administrativa. Solo los líderes pueden modificar el sistema.`', m, ctxErr);
       }
 
-      // Inicializar chat si no existe
       if (!global.db.data.chats[m.chat]) {
         global.db.data.chats[m.chat] = { economy: true };
       }
@@ -132,13 +131,13 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
       const currentStatus = global.db.data.chats[m.chat].economy;
 
       if (!action) {
-        const estado = currentStatus ? '🟢 ACTIVADO' : '🔴 DESACTIVADO';
+        const estado = currentStatus ? 'OPERATIVO' : 'INACTIVO';
         await m.react('📊')
         return conn.reply(m.chat, 
-          `> \`📊 Estado del Sistema Económico\` 🍙\n\n` +
-          `> \`🔧 Comando:\` ${usedPrefix}economy <on/off>\n` +
-          `> \`📊 Estado actual:\` ${estado}\n\n` +
-          `> \`💡 Activa o desactiva los comandos de economía en este grupo.\``,
+          `> ⓘ \`Sistema Económico Imperial\`\n\n` +
+          `> ⓘ \`Comando:\` ${usedPrefix}economy <on/off>\n` +
+          `> ⓘ \`Estado:\` ${estado}\n\n` +
+          `> ⓘ \`Los administradores controlan el flujo económico del grupo.\``,
           m, ctxWarn
         );
       }
@@ -146,13 +145,13 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
       if (action === 'on' || action === 'activar') {
         if (currentStatus) {
           await m.react('ℹ️')
-          return conn.reply(m.chat, '> `ℹ️ El sistema económico ya está activado.`', m, ctxWarn);
+          return conn.reply(m.chat, '> ⓘ `El sistema ya está operativo. No hay necesidad de redundancia.`', m, ctxWarn);
         }
         global.db.data.chats[m.chat].economy = true;
         await m.react('✅')
         return conn.reply(m.chat, 
-          '> `✅ Sistema Económico Activado` 🍙\n\n' +
-          '> `📚 "¡Ahora pueden disfrutar del sistema económico en este grupo!"` ✨',
+          '> ⓘ `Sistema Económico Activado`\n\n' +
+          '> ⓘ `Todas las operaciones financieras están ahora disponibles. Que comience el juego.`',
           m, ctxOk
         );
       }
@@ -160,29 +159,29 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
       if (action === 'off' || action === 'desactivar') {
         if (!currentStatus) {
           await m.react('ℹ️')
-          return conn.reply(m.chat, '> `ℹ️ El sistema económico ya está desactivado.`', m, ctxWarn);
+          return conn.reply(m.chat, '> ⓘ `El sistema ya está inactivo. Estado confirmado.`', m, ctxWarn);
         }
         global.db.data.chats[m.chat].economy = false;
         await m.react('❌')
         return conn.reply(m.chat, 
-          '> `❌ Sistema Económico Desactivado` 🍙\n\n' +
-          '> `📚 "He desactivado el sistema económico en este grupo."` ✨',
+          '> ⓘ `Sistema Económico Desactivado`\n\n' +
+          '> ⓘ `Todas las transacciones han sido suspendidas. Decisión ejecutada.`',
           m, ctxWarn
         );
       }
 
       await m.react('❌')
-      return conn.reply(m.chat, '> `❌ Opción no válida. Usa: on u off`', m, ctxErr);
+      return conn.reply(m.chat, '> ⓘ `Parámetro inválido. Usa: on u off`', m, ctxErr);
     }
 
-    // VERIFICAR SI LA ECONOMÍA ESTÁ ACTIVA PARA OTROS COMANDOS
+    // VERIFICAR SI LA ECONOMÍA ESTÁ ACTIVA
     if (!global.db.data.chats[m.chat]?.economy) {
       await m.react('🚫')
       return conn.reply(m.chat, 
-        `> \`🚫 Sistema Económico Desactivado\` 🍙\n\n` +
-        `> \`📚 Un administrador puede activarlo con:\`\n` +
-        `> \`» ${usedPrefix}economy on\`\n\n` +
-        `> \`🍙 "Los comandos económicos están deshabilitados en este grupo"\` ✨`,
+        `> ⓘ \`Sistema Económico Inactivo\`\n\n` +
+        `> ⓘ \`Activación requerida:\`\n` +
+        `> ⓘ \`${usedPrefix}economy on\`\n\n` +
+        `> ⓘ \`Solo administradores pueden modificar este parámetro.\``,
         m, ctxErr
       );
     }
@@ -191,17 +190,15 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
     if (command === 'balance' || command === 'bal' || command === 'dinero') {
       let target = m.sender;
 
-      // Verificar si mencionaron a alguien
       if (m.mentionedJid && m.mentionedJid.length > 0) {
         target = m.mentionedJid[0];
       } else if (m.quoted) {
         target = m.quoted.sender;
       }
 
-      // Inicializar usuario si no existe
       if (!global.db.data.users[target]) {
         global.db.data.users[target] = {
-          coin: 1000, // Dinero inicial
+          coin: 1000,
           bank: 0,
           exp: 0,
           lastDaily: 0,
@@ -215,7 +212,7 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
       const bank = user.bank || 0;
       const total = coin + bank;
 
-      let name = 'Usuario';
+      let name = 'Peón';
       try {
         name = await conn.getName(target);
       } catch {
@@ -224,11 +221,11 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
 
       await m.react('💰')
       const texto = 
-        `> \`📊 BALANCE DE ${name.toUpperCase()}\` 🍙\n\n` +
-        `> \`💼 Cartera:\` *¥${coin.toLocaleString()}* ${currency}\n` +
-        `> \`🏦 Banco:\` *¥${bank.toLocaleString()}* ${currency}\n` +
-        `> \`💰 Total:\` *¥${total.toLocaleString()}* ${currency}\n\n` +
-        `> \`📚 "¡Sigue esforzándote!"\` ✨`;
+        `> ⓘ \`Estado Financiero de ${name}\`\n\n` +
+        `> ⓘ \`Efectivo:\` ¥${coin.toLocaleString()} ${currency}\n` +
+        `> ⓘ \`Depósitos:\` ¥${bank.toLocaleString()} ${currency}\n` +
+        `> ⓘ \`Capital Total:\` ¥${total.toLocaleString()} ${currency}\n\n` +
+        `> ⓘ \`El poder se mide en recursos. Continúa acumulando.\``;
 
       await conn.reply(m.chat, texto, m, ctxOk);
     }
@@ -244,41 +241,38 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
       };
 
       const now = Date.now();
-      const gap = 86400000; // 24 horas
+      const gap = 86400000;
 
       if (user.lastDaily && now < user.lastDaily + gap) {
         const waitTime = formatTime(Math.floor((user.lastDaily + gap - now) / 1000));
         await m.react('⏳')
         return conn.reply(m.chat, 
-          `> \`⏰ Espera un poco más\` 🍙\n\n` +
-          `> \`📚 Vuelve en:\` *${waitTime}*\n\n` +
-          `> \`🍙 "La paciencia es una virtud"\` ✨`,
+          `> ⓘ \`Recolección Diaria en Cooldown\`\n\n` +
+          `> ⓘ \`Tiempo restante:\` ${waitTime}\n\n` +
+          `> ⓘ \`La paciencia es una virtud estratégica. Aguarda tu momento.\``,
           m, ctxWarn
         );
       }
 
-      // Calcular recompensa
       const baseReward = 5000;
       const streakBonus = (user.streak || 0) * 500;
       const reward = baseReward + streakBonus;
       const expGain = 50;
 
-      // Actualizar usuario
       user.coin = (user.coin || 1000) + reward;
       user.exp = (user.exp || 0) + expGain;
       user.streak = (user.streak || 0) + 1;
       user.lastDaily = now;
 
-      // Guardar en la base de datos
       global.db.data.users[m.sender] = user;
 
       await m.react('🎉')
       await conn.reply(m.chat,
-        `> \`🎉 RECOMPENSA DIARIA\` 🍙\n\n` +
-        `> \`💰 Monedas:\` *¥${reward.toLocaleString()}* ${currency}\n` +
-        `> \`⭐ Experiencia:\` *+${expGain} EXP*\n` +
-        `> \`📅 Racha:\` *Día ${user.streak}*\n\n` +
-        `> \`📚 "¡Excelente trabajo hoy!"\` ✨`,
+        `> ⓘ \`Recursos Diarios Adquiridos\`\n\n` +
+        `> ⓘ \`Fondos:\` ¥${reward.toLocaleString()} ${currency}\n` +
+        `> ⓘ \`Experiencia:\` +${expGain} EXP\n` +
+        `> ⓘ \`Racha:\` Día ${user.streak}\n\n` +
+        `> ⓘ \`Consistencia es poder. Mantén tu racha activa.\``,
         m, ctxOk
       );
     }
@@ -293,15 +287,15 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
       };
 
       const now = Date.now();
-      const gap = 86400000; // 24 horas
+      const gap = 86400000;
 
       if (user.lastcofre && now < user.lastcofre + gap) {
         const waitTime = formatTime(Math.floor((user.lastcofre + gap - now) / 1000));
         await m.react('⏳')
         return conn.reply(m.chat,
-          `> \`⏰ Cofre en enfriamiento\` 🍙\n\n` +
-          `> \`📚 Vuelve en:\` *${waitTime}*\n\n` +
-          `> \`🍙 "Los tesoros necesitan tiempo para regenerarse"\` ✨`,
+          `> ⓘ \`Cofre en Recuperación\`\n\n` +
+          `> ⓘ \`Disponible en:\` ${waitTime}\n\n` +
+          `> ⓘ \`Los tesoros no aparecen de la nada. Requieren tiempo.\``,
           m, ctxWarn
         );
       }
@@ -317,11 +311,11 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
 
       await m.react('🎁')
       await conn.reply(m.chat,
-        `> \`🎁 ¡COFRE ENCONTRADO!\` 🍙\n\n` +
+        `> ⓘ \`Cofre Imperial Descubierto\`\n\n` +
         `${pickRandom(cofres)}\n\n` +
-        `> \`💰 Recompensa:\` *¥${reward.toLocaleString()}* ${currency}\n` +
-        `> \`⭐ Experiencia:\` *+${expGain} EXP*\n\n` +
-        `> \`📚 "¡Buen trabajo!"\` ✨`,
+        `> ⓘ \`Adquisición:\` ¥${reward.toLocaleString()} ${currency}\n` +
+        `> ⓘ \`Experiencia:\` +${expGain} EXP\n\n` +
+        `> ⓘ \`La fortuna favorece a los audaces. Bien jugado.\``,
         m, ctxOk
       );
     }
@@ -342,31 +336,31 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
       if (users.length === 0) {
         await m.react('📊')
         return conn.reply(m.chat,
-          `> \`📊 TOP RICOS\` 🍙\n\n` +
-          `> \`📝 Aún no hay usuarios con dinero.\`\n\n` +
-          `> \`💡 Usa ${usedPrefix}daily para empezar\`\n\n` +
-          `> \`📚 "¡Sé el primero en aparecer en el top!"\` ✨`,
+          `> ⓘ \`Ranking Imperial\`\n\n` +
+          `> ⓘ \`No hay participantes registrados.\`\n\n` +
+          `> ⓘ \`Usa ${usedPrefix}daily para iniciar tu ascenso al poder.\``,
           m, ctxWarn
         );
       }
 
       await m.react('🏆')
-      let text = `> \`🏆 TOP 10 - USUARIOS MÁS RICOS\` 🍙\n\n`;
+      let text = `> ⓘ \`Jerarquía Económica Imperial - Top 10\`\n\n`;
 
       for (let i = 0; i < users.length; i++) {
         const user = users[i];
-        let name = 'Usuario';
+        let name = 'Anónimo';
         try {
           name = await conn.getName(user.jid);
         } catch {
           name = user.jid.split('@')[0];
         }
 
-        text += `> \`${i + 1}. 🎯 ${name}\`\n`;
-        text += `> \`   💰 Total:\` *¥${user.total.toLocaleString()}* ${currency}\n\n`;
+        const rank = i === 0 ? '👑' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i + 1}.`;
+        text += `> ⓘ \`${rank} ${name}\`\n`;
+        text += `> ⓘ \`Capital:\` ¥${user.total.toLocaleString()} ${currency}\n\n`;
       }
 
-      text += `> \`📚 "¡Sigue esforzándote para subir en el ranking!"\` ✨`;
+      text += `> ⓘ \`Solo los más astutos dominan la cima. ¿Cuál es tu posición?\``;
 
       await conn.reply(m.chat, text, m, ctxOk);
     }
@@ -392,9 +386,9 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
         const wait = formatTimeMs(restante);
         await m.react('⏳')
         return conn.reply(m.chat, 
-          `> \`⏰ TIEMPO DE ESPERA\` 🍙\n\n` +
-          `> \`⏳ Debes esperar:\` *${wait}*\n\n` +
-          `> \`📚 "La paciencia es clave en el crimen"\` ✨`,
+          `> ⓘ \`Operación en Cooldown\`\n\n` +
+          `> ⓘ \`Espera requerida:\` ${wait}\n\n` +
+          `> ⓘ \`Las mejores estrategias requieren tiempo de preparación.\``,
           m, ctxWarn
         );
       }
@@ -410,11 +404,11 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
 
         await m.react('✅')
         await conn.reply(m.chat, 
-          `> \`✅ ACCIÓN EXITOSA\` 🍙\n\n` +
+          `> ⓘ \`Operación Exitosa\`\n\n` +
           `${evento.mensaje}\n\n` +
-          `> \`💰 Ganancia:\` *+¥${cantidad.toLocaleString()}* ${currency}\n` +
-          `> \`🎒 Cartera:\` *¥${user.coin.toLocaleString()}* ${currency}\n\n` +
-          `> \`📚 "¡Operación completada con éxito!"\` ✨`,
+          `> ⓘ \`Ganancia:\` +¥${cantidad.toLocaleString()} ${currency}\n` +
+          `> ⓘ \`Saldo Actual:\` ¥${user.coin.toLocaleString()} ${currency}\n\n` +
+          `> ⓘ \`Como predije. Todo según el plan.\``,
           m, ctxOk
         );
       } else {
@@ -423,11 +417,11 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
 
         await m.react('❌')
         await conn.reply(m.chat,
-          `> \`❌ ACCIÓN FALLIDA\` 🍙\n\n` +
+          `> ⓘ \`Operación Comprometida\`\n\n` +
           `${evento.mensaje}\n\n` +
-          `> \`💸 Pérdida:\` *-¥${cantidad.toLocaleString()}* ${currency}\n` +
-          `> \`🎒 Cartera:\` *¥${user.coin.toLocaleString()}* ${currency}\n\n` +
-          `> \`📚 "Mejor suerte la próxima vez"\` ✨`,
+          `> ⓘ \`Pérdida:\` -¥${cantidad.toLocaleString()} ${currency}\n` +
+          `> ⓘ \`Saldo Actual:\` ¥${user.coin.toLocaleString()} ${currency}\n\n` +
+          `> ⓘ \`Incluso los mejores estrategas enfrentan contratiempos. Recalculando.\``,
           m, ctxErr
         );
       }
@@ -451,9 +445,9 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
         const tiempoRestante = formatTimeMs(user.lastwork + cooldown - Date.now());
         await m.react('⏳')
         return conn.reply(m.chat, 
-          `> \`⏰ DEBES ESPERAR\` 🍙\n\n` +
-          `> \`📚 Vuelve en:\` *${tiempoRestante}*\n\n` +
-          `> \`🍙 "El trabajo duro requiere descanso"\` ✨`,
+          `> ⓘ \`Trabajo en Cooldown\`\n\n` +
+          `> ⓘ \`Disponible en:\` ${tiempoRestante}\n\n` +
+          `> ⓘ \`Incluso los estrategas requieren descanso entre misiones.\``,
           m, ctxWarn
         );
       }
@@ -466,15 +460,15 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
 
       user.coin += gananciaTotal;
 
-      const trabajo = pickRandom(trabajoItsuki);
+      const trabajo = pickRandom(trabajoLelouch);
 
       await m.react('💼')
       await conn.reply(m.chat,
-        `> \`💼 TRABAJO COMPLETADO\` 🍙\n\n` +
+        `> ⓘ \`Misión Completada\`\n\n` +
         `${trabajo}\n\n` +
-        `> \`💰 Ganancia:\` *¥${gananciaTotal.toLocaleString()}* ${currency}\n` +
-        `> \`🎒 Cartera:\` *¥${user.coin.toLocaleString()}* ${currency}\n\n` +
-        `> \`📚 "¡Buen trabajo Itsuki!"\` ✨`,
+        `> ⓘ \`Compensación:\` ¥${gananciaTotal.toLocaleString()} ${currency}\n` +
+        `> ⓘ \`Balance:\` ¥${user.coin.toLocaleString()} ${currency}\n\n` +
+        `> ⓘ \`Trabajo eficiente. Como siempre.\``,
         m, ctxOk
       );
     }
@@ -492,15 +486,14 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
       if (!args[0]) {
         await m.react('💳')
         return conn.reply(m.chat, 
-          `> \`💳 DEPÓSITO BANCARIO\` 🍙\n\n` +
-          `> \`❌ Debes especificar una cantidad\`\n\n` +
-          `> \`📝 Uso:\`\n` +
-          `> \`• ${usedPrefix}${command} <cantidad>\`\n` +
-          `> \`• ${usedPrefix}${command} all\`\n\n` +
-          `> \`💡 Ejemplos:\`\n` +
-          `> \`• ${usedPrefix}${command} 5000\`\n` +
-          `> \`• ${usedPrefix}${command} all\`\n\n` +
-          `> \`📚 "Especifica cuánto deseas depositar"\` ✨`,
+          `> ⓘ \`Sistema de Depósitos Imperiales\`\n\n` +
+          `> ⓘ \`Sintaxis incorrecta. Especifica la cantidad.\`\n\n` +
+          `> ⓘ \`Uso:\`\n` +
+          `> ⓘ \`${usedPrefix}${command} <cantidad>\`\n` +
+          `> ⓘ \`${usedPrefix}${command} all\`\n\n` +
+          `> ⓘ \`Ejemplos válidos:\`\n` +
+          `> ⓘ \`${usedPrefix}${command} 5000\`\n` +
+          `> ⓘ \`${usedPrefix}${command} all\``,
           m, ctxWarn
         );
       }
@@ -508,9 +501,8 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
       if ((args[0]) < 1) {
         await m.react('⚠️')
         return conn.reply(m.chat, 
-          `> \`⚠️ CANTIDAD INVÁLIDA\` 🍙\n\n` +
-          `> \`❌ La cantidad debe ser mayor a 0\`\n\n` +
-          `> \`📚 "No puedes depositar cantidades negativas"\` ✨`,
+          `> ⓘ \`Parámetro Inválido\`\n\n` +
+          `> ⓘ \`La cantidad debe ser positiva. Lógica básica.\``,
           m, ctxErr
         );
       }
@@ -521,11 +513,11 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
         if (count <= 0 || !user.coin) {
           await m.react('💸')
           return conn.reply(m.chat, 
-            `> \`💸 SIN FONDOS\` 🍙\n\n` +
-            `> \`❌ No tienes ${currency} en tu cartera\`\n\n` +
-            `> \`👛 Cartera:\` *¥0*\n\n` +
-            `> \`💡 Usa:\` ${usedPrefix}work\n\n` +
-            `> \`📚 "Primero necesitas ganar dinero"\` ✨`,
+            `> ⓘ \`Fondos Insuficientes\`\n\n` +
+            `> ⓘ \`No posees ${currency} en efectivo.\`\n\n` +
+            `> ⓘ \`Balance:\` ¥0\n\n` +
+            `> ⓘ \`Usa:\` ${usedPrefix}work\n\n` +
+            `> ⓘ \`No puedes depositar lo que no tienes. Obvio.\``,
             m, ctxErr
           );
         }
@@ -535,12 +527,12 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
 
         await m.react('✅')
         await conn.reply(m.chat, 
-          `> \`✅ DEPÓSITO COMPLETO\` 🍙\n\n` +
-          `> \`📚 Has depositado todo tu dinero\`\n\n` +
-          `> \`💰 Monto:\` *¥${count.toLocaleString()}* ${currency}\n` +
-          `> \`🏦 Banco:\` *¥${user.bank.toLocaleString()}* ${currency}\n` +
-          `> \`👛 Cartera:\` *¥${user.coin.toLocaleString()}* ${currency}\n\n` +
-          `> \`📚 "¡Dinero seguro en el banco!"\` ✨`,
+          `> ⓘ \`Depósito Total Ejecutado\`\n\n` +
+          `> ⓘ \`Transferencia completa al sistema bancario.\`\n\n` +
+          `> ⓘ \`Monto:\` ¥${count.toLocaleString()} ${currency}\n` +
+          `> ⓘ \`Banco:\` ¥${user.bank.toLocaleString()} ${currency}\n` +
+          `> ⓘ \`Efectivo:\` ¥${user.coin.toLocaleString()} ${currency}\n\n` +
+          `> ⓘ \`Fondos asegurados. Movimiento estratégico.\``,
           m, ctxOk
         );
         return !0;
@@ -549,12 +541,12 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
       if (!Number(args[0])) {
         await m.react('❌')
         return conn.reply(m.chat, 
-          `> \`❌ FORMATO INCORRECTO\` 🍙\n\n` +
-          `> \`⚠️ Debes ingresar un número válido\`\n\n` +
-          `> \`📝 Ejemplos:\`\n` +
-          `> \`• ${usedPrefix}${command} 25000\`\n` +
-          `> \`• ${usedPrefix}${command} all\`\n\n` +
-          `> \`📚 "Usa números para especificar la cantidad"\` ✨`,
+          `> ⓘ \`Formato Incorrecto\`\n\n` +
+          `> ⓘ \`Debes ingresar valores numéricos.\`\n\n` +
+          `> ⓘ \`Ejemplos:\`\n` +
+          `> ⓘ \`${usedPrefix}${command} 25000\`\n` +
+          `> ⓘ \`${usedPrefix}${command} all\`\n\n` +
+          `> ⓘ \`Usa números enteros, no texto.\``,
           m, ctxErr
         );
       }
@@ -564,11 +556,11 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
       if (!user.coin) {
         await m.react('💸')
         return conn.reply(m.chat, 
-          `> \`💸 SIN FONDOS\` 🍙\n\n` +
-          `> \`❌ No tienes ${currency} en tu cartera\`\n\n` +
-          `> \`👛 Cartera:\` *¥0*\n\n` +
-          `> \`💡 Usa:\` ${usedPrefix}work\n\n` +
-          `> \`📚 "Primero trabaja para ganar dinero"\` ✨`,
+          `> ⓘ \`Sin Fondos Disponibles\`\n\n` +
+          `> ⓘ \`No posees ${currency} en efectivo.\`\n\n` +
+          `> ⓘ \`Balance:\` ¥0\n\n` +
+          `> ⓘ \`Usa:\` ${usedPrefix}work\n\n` +
+          `> ⓘ \`Genera recursos antes de intentar depositarlos.\``,
           m, ctxErr
         );
       }
@@ -576,12 +568,12 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
       if (user.coin < count) {
         await m.react('⚠️')
         return conn.reply(m.chat, 
-          `> \`⚠️ FONDOS INSUFICIENTES\` 🍙\n\n` +
-          `> \`❌ No tienes suficiente dinero\`\n\n` +
-          `> \`👛 Cartera:\` *¥${user.coin.toLocaleString()}* ${currency}\n` +
-          `> \`💰 Intentaste:\` *¥${count.toLocaleString()}* ${currency}\n\n` +
-          `> \`💡 Usa:\` ${usedPrefix}${command} all para depositar todo\n\n` +
-          `> \`📚 "Solo puedes depositar lo que tienes"\` ✨`,
+          `> ⓘ \`Fondos Insuficientes\`\n\n` +
+          `> ⓘ \`Capital disponible menor al solicitado.\`\n\n` +
+          `> ⓘ \`Efectivo:\` ¥${user.coin.toLocaleString()} ${currency}\n` +
+          `> ⓘ \`Solicitado:\` ¥${count.toLocaleString()} ${currency}\n\n` +
+          `> ⓘ \`Usa:\` ${usedPrefix}${command} all para depositar todo\n\n` +
+          `> ⓘ \`Solo puedes depositar lo que posees. Matemática simple.\``,
           m, ctxWarn
         );
       }
@@ -591,13 +583,13 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
 
       await m.react('✅')
       await conn.reply(m.chat, 
-        `> \`✅ DEPÓSITO EXITOSO\` 🍙\n\n` +
-        `> \`📚 Depósito realizado correctamente\`\n\n` +
-        `> \`💰 Monto:\` *¥${count.toLocaleString()}* ${currency}\n` +
-        `> \`👛 Cartera:\` *¥${user.coin.toLocaleString()}* ${currency}\n` +
-        `> \`🏦 Banco:\` *¥${user.bank.toLocaleString()}* ${currency}\n` +
-        `> \`💎 Total:\` *¥${(user.coin + user.bank).toLocaleString()}* ${currency}\n\n` +
-        `> \`📚 "¡Dinero transferido al banco con éxito!"\` ✨`,
+        `> ⓘ \`Depósito Ejecutado\`\n\n` +
+        `> ⓘ \`Transacción completada exitosamente.\`\n\n` +
+        `> ⓘ \`Depositado:\` ¥${count.toLocaleString()} ${currency}\n` +
+        `> ⓘ \`Efectivo:\` ¥${user.coin.toLocaleString()} ${currency}\n` +
+        `> ⓘ \`Banco:\` ¥${user.bank.toLocaleString()} ${currency}\n` +
+        `> ⓘ \`Total:\` ¥${(user.coin + user.bank).toLocaleString()} ${currency}\n\n` +
+        `> ⓘ \`Fondos transferidos al depósito seguro. Bien ejecutado.\``,
         m, ctxOk
       );
     }
@@ -610,13 +602,13 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
       if (!args[0]) {
         await m.react('💸')
         return conn.reply(m.chat, 
-          `> \`💸 TRANSFERENCIA BANCARIA\` 🍙\n\n` +
-          `> \`❌ Debes especificar la cantidad y el destinatario\`\n\n` +
-          `> \`📝 Uso correcto:\`\n` +
-          `> \`${usedPrefix}${command} <cantidad> @usuario\`\n\n` +
-          `> \`💡 Ejemplo:\`\n` +
-          `> \`${usedPrefix}${command} 5000 @usuario\`\n\n` +
-          `> \`📚 "Especifica cuánto deseas transferir y a quién"\` ✨`,
+          `> ⓘ \`Sistema de Transferencias Imperiales\`\n\n` +
+          `> ⓘ \`Sintaxis incorrecta. Especifica cantidad y destinatario.\`\n\n` +
+          `> ⓘ \`Formato:\`\n` +
+          `> ⓘ \`${usedPrefix}${command} <cantidad> @usuario\`\n\n` +
+          `> ⓘ \`Ejemplo:\`\n` +
+          `> ⓘ \`${usedPrefix}${command} 5000 @usuario\`\n\n` +
+          `> ⓘ \`Especifica todos los parámetros requeridos.\``,
           m, ctxWarn
         );
       }
@@ -624,13 +616,13 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
       if (!isNumber(args[0]) && args[0].startsWith('@')) {
         await m.react('🔄')
         return conn.reply(m.chat, 
-          `> \`🔄 ORDEN INCORRECTO\` 🍙\n\n` +
-          `> \`❌ Primero indica la cantidad, luego la persona\`\n\n` +
-          `> \`📝 Formato correcto:\`\n` +
-          `> \`${usedPrefix}${command} <cantidad> @usuario\`\n\n` +
-          `> \`💡 Ejemplo:\`\n` +
-          `> \`${usedPrefix}${command} 1000 @usuario\`\n\n` +
-          `> \`📚 "El orden correcto es: cantidad primero, destinatario después"\` ✨`,
+          `> ⓘ \`Orden de Parámetros Incorrecto\`\n\n` +
+          `> ⓘ \`La cantidad debe ir primero, luego el destinatario.\`\n\n` +
+          `> ⓘ \`Formato correcto:\`\n` +
+          `> ⓘ \`${usedPrefix}${command} <cantidad> @usuario\`\n\n` +
+          `> ⓘ \`Ejemplo:\`\n` +
+          `> ⓘ \`${usedPrefix}${command} 1000 @usuario\`\n\n` +
+          `> ⓘ \`Orden lógico: monto primero, receptor después.\``,
           m, ctxErr
         );
       }
@@ -638,13 +630,13 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
       if (!who) {
         await m.react('❌')
         return conn.reply(m.chat, 
-          `> \`❌ DESTINATARIO FALTANTE\` 🍙\n\n` +
-          `> \`⚠️ Debes mencionar a quién le transferirás ${currency}\`\n\n` +
-          `> \`📝 Formas de mencionar:\`\n` +
-          `> \`• Responder a su mensaje\`\n` +
-          `> \`• Mencionar con @usuario\`\n` +
-          `> \`• Usar su número\`\n\n` +
-          `> \`📚 "Necesito saber a quién enviar el dinero"\` ✨`,
+          `> ⓘ \`Destinatario No Especificado\`\n\n` +
+          `> ⓘ \`Debes indicar el receptor de los ${currency}.\`\n\n` +
+          `> ⓘ \`Métodos válidos:\`\n` +
+          `> ⓘ \`Responder a su mensaje\`\n` +
+          `> ⓘ \`Mencionar con @usuario\`\n` +
+          `> ⓘ \`Incluir su número\`\n\n` +
+          `> ⓘ \`Especifica el objetivo de la transferencia.\``,
           m, ctxErr
         );
       }
@@ -652,9 +644,9 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
       if (!(who in global.db.data.users)) {
         await m.react('🔍')
         return conn.reply(m.chat, 
-          `> \`🔍 USUARIO NO REGISTRADO\` 🍙\n\n` +
-          `> \`⚠️ Este usuario no está en mi base de datos\`\n\n` +
-          `> \`📚 "El destinatario debe haber usado el bot al menos una vez"\` ✨`,
+          `> ⓘ \`Usuario No Registrado\`\n\n` +
+          `> ⓘ \`Este individuo no existe en la base de datos.\`\n\n` +
+          `> ⓘ \`El receptor debe haber interactuado con el sistema previamente.\``,
           m, ctxErr
         );
       }
@@ -662,9 +654,9 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
       if (who === m.sender) {
         await m.react('😅')
         return conn.reply(m.chat, 
-          `> \`😅 TRANSFERENCIA INVÁLIDA\` 🍙\n\n` +
-          `> \`❌ No puedes transferirte dinero a ti mismo\`\n\n` +
-          `> \`📚 "Eso no tiene sentido... ¡ya es tu dinero!"\` ✨`,
+          `> ⓘ \`Transferencia Autorreferencial Inválida\`\n\n` +
+          `> ⓘ \`No puedes transferirte fondos a ti mismo.\`\n\n` +
+          `> ⓘ \`Lógica básica. Los recursos ya son tuyos.\``,
           m, ctxWarn
         );
       }
@@ -678,15 +670,15 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
       if (user.bank < count) {
         await m.react('💸')
         return conn.reply(m.chat, 
-          `> \`💸 FONDOS INSUFICIENTES\` 🍙\n\n` +
-          `> \`❌ No tienes suficiente dinero en el banco\`\n\n` +
-          `> \`💰 Datos:\`\n` +
-          `> \`🏦 Dinero en banco:\` *¥${user.bank.toLocaleString()}* ${currency}\n` +
-          `> \`💸 Intentaste transferir:\` *¥${count.toLocaleString()}* ${currency}\n` +
-          `> \`❌ Faltante:\` *¥${(count - user.bank).toLocaleString()}* ${currency}\n\n` +
-          `> \`📚 "Solo puedes transferir el dinero que tienes en el banco"\`\n\n` +
-          `> \`💡 Usa:\` *${usedPrefix}deposit* para depositar más dinero\n\n` +
-          `> \`🍙 "¡Deposita más fondos para poder transferir!"\` ✨`,
+          `> ⓘ \`Fondos Bancarios Insuficientes\`\n\n` +
+          `> ⓘ \`Capital depositado menor al monto solicitado.\`\n\n` +
+          `> ⓘ \`Datos Financieros:\`\n` +
+          `> ⓘ \`Banco:\` ¥${user.bank.toLocaleString()} ${currency}\n` +
+          `> ⓘ \`Solicitado:\` ¥${count.toLocaleString()} ${currency}\n` +
+          `> ⓘ \`Déficit:\` ¥${(count - user.bank).toLocaleString()} ${currency}\n\n` +
+          `> ⓘ \`Solo puedes transferir fondos depositados en el banco.\`\n\n` +
+          `> ⓘ \`Usa:\` ${usedPrefix}deposit para depositar más capital\n\n` +
+          `> ⓘ \`Deposita fondos adicionales antes de intentar esta operación.\``,
           m, ctxErr
         );
       }
@@ -694,14 +686,13 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
       if (count < 10) {
         await m.react('⚠️')
         return conn.reply(m.chat, 
-          `> \`⚠️ MONTO MÍNIMO\` 🍙\n\n` +
-          `> \`❌ La cantidad mínima a transferir es ¥10 ${currency}\`\n\n` +
-          `> \`📚 "Las transferencias muy pequeñas no son procesadas"\` ✨`,
+          `> ⓘ \`Monto Mínimo No Alcanzado\`\n\n` +
+          `> ⓘ \`Transferencia mínima: ¥10 ${currency}\`\n\n` +
+          `> ⓘ \`Transacciones microscópicas no son procesadas.\``,
           m, ctxErr
         );
       }
 
-      // Realizar la transferencia
       user.bank -= count;
       if (typeof recipient.bank !== 'number') recipient.bank = 0;
       recipient.bank += count;
@@ -719,39 +710,36 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
 
       const senderName = await conn.getName(m.sender) || m.sender.split('@')[0];
 
-      // Mensaje de confirmación al remitente
       await m.react('✅')
       await conn.reply(m.chat, 
-        `> \`✅ TRANSFERENCIA EXITOSA\` 🍙\n\n` +
-        `> \`📚 Transferencia completada correctamente\`\n\n` +
-        `> \`📊 Detalles de la transacción:\`\n` +
-        `> \`👤 De:\` *${senderName}*\n` +
-        `> \`👤 Para:\` *${name}*\n` +
-        `> \`💵 Monto:\` *¥${count.toLocaleString()}* ${currency}\n\n` +
-        `> \`💰 Tu nuevo balance:\`\n` +
-        `> \`🏦 Banco:\` *¥${user.bank.toLocaleString()}* ${currency}\n\n` +
-        `> \`📚 "Transferencia procesada con éxito"\`\n` +
-        `> \`🍙 "¡Gracias por usar el sistema bancario de Itsuki!"\` ✨`, 
+        `> ⓘ \`Transferencia Ejecutada\`\n\n` +
+        `> ⓘ \`Operación completada exitosamente.\`\n\n` +
+        `> ⓘ \`Datos de Transacción:\`\n` +
+        `> ⓘ \`Remitente:\` ${senderName}\n` +
+        `> ⓘ \`Destinatario:\` ${name}\n` +
+        `> ⓘ \`Monto:\` ¥${count.toLocaleString()} ${currency}\n\n` +
+        `> ⓘ \`Tu Balance Actual:\`\n` +
+        `> ⓘ \`Banco:\` ¥${user.bank.toLocaleString()} ${currency}\n\n` +
+        `> ⓘ \`Transacción procesada. Fondos transferidos exitosamente.\``, 
         m, ctxOk
       );
 
-      // Notificar al destinatario
       await conn.sendMessage(who, {
-        text: `> \`💰 DINERO RECIBIDO\` 🍙\n\n` +
-              `> \`🎉 ¡Has recibido una transferencia!\`\n\n` +
-              `> \`📊 Detalles:\`\n` +
-              `> \`👤 De:\` *${senderName}*\n` +
-              `> \`💵 Monto recibido:\` *¥${count.toLocaleString()}* ${currency}\n` +
-              `> \`🏦 Nuevo balance:\` *¥${recipient.bank.toLocaleString()}* ${currency}\n\n` +
-              `> \`📚 "¡Alguien te ha enviado dinero!"\`\n` +
-              `> \`🍙 "El dinero ya está disponible en tu banco"\` ✨`
+        text: `> ⓘ \`Transferencia Recibida\`\n\n` +
+              `> ⓘ \`Has recibido una transferencia bancaria.\`\n\n` +
+              `> ⓘ \`Detalles:\`\n` +
+              `> ⓘ \`Remitente:\` ${senderName}\n` +
+              `> ⓘ \`Monto:\` ¥${count.toLocaleString()} ${currency}\n` +
+              `> ⓘ \`Nuevo Balance:\` ¥${recipient.bank.toLocaleString()} ${currency}\n\n` +
+              `> ⓘ \`Los fondos han sido acreditados en tu cuenta bancaria.\`\n` +
+              `> ⓘ \`Operación completada. Recursos disponibles.\``
       });
     }
 
   } catch (error) {
     console.error('Error en economía:', error);
     await m.react('❌')
-    conn.reply(m.chat, '> `❌ Ocurrió un error. Intenta nuevamente.`', m, ctxErr);
+    conn.reply(m.chat, '> ⓘ `Error crítico en el sistema. Reintenta la operación.`', m, ctxErr);
   }
 };
 
