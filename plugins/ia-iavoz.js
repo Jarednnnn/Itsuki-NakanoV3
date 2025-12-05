@@ -3,11 +3,10 @@ import fetch from 'node-fetch'
 let handler = async (m, { conn, text }) => {
   if (!text) return m.reply('🧀 *Escribe algo*')
   
-  // TU API KEY de DeepSeek
-  const DEEPSEEK_API_KEY = 'sk-13f9a46d1da34c6a94551eb056d4af6d'
+  // TU NUEVA KEY
+  const DEEPSEEK_API_KEY = 'sk-6ec6c48f041c4f7da3d012883ab871a9'
   
   try {
-    // DeepSeek API
     const response = await fetch('https://api.deepseek.com/chat/completions', {
       method: 'POST',
       headers: {
@@ -18,23 +17,22 @@ let handler = async (m, { conn, text }) => {
         model: 'deepseek-chat',
         messages: [{
           role: 'system', 
-          content: 'Eres C.C. de Code Geass. Responde máximo 2 frases. Habla de contratos, Lelouch, pizza y el Geass. Tono misterioso.'
+          content: 'Eres C.C. de Code Geass, la chica inmortal. Responde en máximo 15 palabras. Tono misterioso, habla de contratos, Lelouch, pizza y el Geass.'
         }, {
           role: 'user',
-          content: text
+          content: text.substring(0, 100)
         }],
-        max_tokens: 80,
-        temperature: 0.7
+        max_tokens: 50,
+        temperature: 0.8
       })
     })
     
-    if (!response.ok) throw new Error(`API: ${response.status}`)
-    
     const data = await response.json()
-    const respuesta = data.choices?.[0]?.message?.content || `¿${text}? Hablemos de contratos.`
+    console.log('DeepSeek response:', data)
     
-    // Google TTS
-    const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=es&q=${encodeURIComponent(respuesta)}`
+    const respuesta = data.choices?.[0]?.message?.content || `¿${text}? Interesante propuesta...`
+    
+    const ttsUrl = `https://translate.google.com/translate_tts?tl=es&q=${encodeURIComponent(respuesta)}`
     
     await conn.sendMessage(m.chat, {
       audio: { url: ttsUrl },
@@ -42,20 +40,10 @@ let handler = async (m, { conn, text }) => {
     }, { quoted: m })
     
   } catch (e) {
-    console.error('Error DeepSeek:', e)
-    
-    // Fallback simple
-    const fallback = `Como C.C. diría: "${text}" tiene potencial para un contrato.`
-    const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=es&q=${encodeURIComponent(fallback)}`
-    
-    await conn.sendMessage(m.chat, {
-      audio: { url: ttsUrl },
-      mimetype: 'audio/mpeg'
-    }, { quoted: m })
+    console.error('Error:', e)
+    m.reply(`Error: ${e.message}`)
   }
 }
 
-handler.help = ['cc <texto>']
-handler.tags = ['ia']
-handler.command = ['cc', 'c2']
+handler.command = ['cc']
 export default handler
