@@ -28,7 +28,7 @@ let handler = async (m, { conn, usedPrefix }) => {
         `ⓘ \`INVENTARIO IMPERIAL DE ${name.toUpperCase()}\` 👑\n\n` +
         `ⓘ \`ESTADO DE CUENTA\` 📊\n` +
         `ⓘ \`Cartera Imperial:\` ${moneda}${user.coin || 0} ${currency}\n` +  
-        `ⓘ \`Banco del Trono:\` ${moneda}${user.bank || 0} ${currency}\n` + 
+        `ⓘ \`Banco:\` ${moneda}${user.bank || 0} ${currency}\n` + 
         `ⓘ \`Reserva de Esmeraldas:\` ${user.emerald || 0} unidades\n` + 
         `ⓘ \`Suministros de Hierro:\` ${user.iron || 0} unidades\n` +  
         `ⓘ \`Tesoro de Oro:\` ${user.gold || 0} lingotes\n` + 
