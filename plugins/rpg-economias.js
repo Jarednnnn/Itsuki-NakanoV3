@@ -764,7 +764,7 @@ handler.command = [
   'cofre', 'coffer',
   'baltop', 'top',
   'crimen', 'crime', 'accion',
-  'w', 'trabajar', 'work',
+  'work', 'trabajar', 'w',
   'deposit', 'depositar', 'd', 'dep',
   'pay', 'coinsgive', 'givecoins', 'transferir'
 ];
