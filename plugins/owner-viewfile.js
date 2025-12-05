@@ -9,31 +9,30 @@ let handler = async (m, { text, usedPrefix, command }) => {
         existsSync('./' + folder)
       )
       
-      let message = `> 📁 *ESTRUCTURA DE CARPETAS*\n\n`
+      let message = `> ⓘ ESTRUCTURA DE CARPETAS, mi señor:\n\n`
       folders.forEach(folder => {
         const files = readdirSync('./' + folder, { withFileTypes: true })
           .filter(file => file.isFile())
-          .map(file => `📄 ${file.name}`)
+          .map(file => `- ${file.name}`)
           .join('\n')
-        message += `*${folder}/:*\n${files || '📁 Vacía'}\n\n`
+        message += `*${folder}/:*\n${files || 'Vacía'}\n\n`
       })
       
-      return m.reply(message + `\n*Usa:* ${usedPrefix + command} [ruta]`)
+      return m.reply(message + `> ⓘ Para ver un archivo específico, usa: ${usedPrefix + command} [ruta]`)
     }
 
     const filePath = text.startsWith('./') ? text : './' + text
     
     if (!existsSync(filePath)) {
-      return m.reply(`> ❌ ARCHIVO NO ENCONTRADO\n\`\`\`${filePath}\`\`\``)
+      return m.reply(`> ⓘ Archivo no encontrado, mi señor:\n\`\`\`${filePath}\`\`\``)
     }
 
     const content = readFileSync(filePath, 'utf8')
-    const stats = existsSync(filePath)
 
-    await m.reply(`> 📄 *CONTENIDO DE:* ${text}\n\`\`\`${content.substring(0, 1000)}${content.length > 1000 ? '...' : ''}\`\`\``)
+    await m.reply(`> ⓘ Contenido de: ${text}\n\`\`\`${content.substring(0, 1000)}${content.length > 1000 ? '...' : ''}\`\`\``)
 
   } catch (error) {
-    m.reply(`> ❌ ERROR\n\`\`\`${error.message}\`\`\``)
+    m.reply(`> ⓘ Error al mostrar el archivo, mi señor.\n\`\`\`${error.message}\`\`\``)
   }
 }
 
