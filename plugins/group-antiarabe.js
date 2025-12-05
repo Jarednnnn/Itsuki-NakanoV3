@@ -1,12 +1,22 @@
 let handler = async (m, { conn, usedPrefix, command, isAdmin, isROwner }) => {
     if (!m.isGroup) {
         await m.react('❌')
-        return m.reply('> ⓘ Este comando solo funciona en grupos.')
+        return conn.reply(m.chat, 
+`┏━━━━━━━━━━━━━━━━━━━━━┓
+┃  ⓘ RESTRICCIÓN ┃
+┗━━━━━━━━━━━━━━━━━━━━━┛
+
+> Este comando solo funciona en grupos.`, m)
     }
 
     if (!isAdmin && !isROwner) {
         await m.react('🚫')
-        return m.reply('> ⓘ Solo los administradores pueden usar este comando.')
+        return conn.reply(m.chat,
+`┏━━━━━━━━━━━━━━━━━━━━━┓
+┃  ⓘ ACCESO DENEGADO ┃
+┗━━━━━━━━━━━━━━━━━━━━━┛
+
+> Solo administradores pueden usar este comando.`, m)
     }
 
     let chat = global.db.data.chats[m.chat]
@@ -14,74 +24,59 @@ let handler = async (m, { conn, usedPrefix, command, isAdmin, isROwner }) => {
     let action = args[0]?.toLowerCase()
 
     if (!action || (action !== 'on' && action !== 'off')) {
-        let status = chat.antiArabe ? '🟢 ACTIVADO' : '🔴 DESACTIVADO'
+        let status = chat.antiArabe ? '⚜️ ACTIVADO' : '✖️ DESACTIVADO'
         await m.react('ℹ️')
-        return m.reply(`╭─「 🛡️ *ANTI-ARABE* 🛡️ 」
-│ 
-│ 📊 Estado actual: ${status}
-│ 
-│ 💡 *Uso del comando:*
-│ ├ ${usedPrefix}antiarabe on
-│ └ ${usedPrefix}antiarabe off
-│ 
-│ 📝 *Descripción:*
-│ EXPULSA usuarios con números árabes
-│ Detecta +20 países árabes
-│ 
-│ 🌍 *Países bloqueados:*
-│ ├ Arabia Saudita 🇸🇦 (+966)
-│ ├ Emiratos Árabes 🇦🇪 (+971)
-│ ├ Qatar 🇶🇦 (+974), Kuwait 🇰🇼 (+965)
-│ ├ Bahréin 🇧🇭 (+973), Omán 🇴🇲 (+968)
-│ ├ Egipto 🇪🇬 (+20), Jordania 🇯🇴 (+962)
-│ ├ Siria 🇸🇾, Irak 🇮🇶, Yemen 🇾🇪
-│ └ +10 países más
-╰─◉`.trim())
+        return conn.reply(m.chat,
+`┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  ⓘ ANTI-ARABE ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+> Estado: ${status}
+
+> Uso: ${usedPrefix}antiarabe [on/off]
+
+> Detecta y expulsa números de países árabes.`, m)
     }
 
     if (action === 'on') {
         if (chat.antiArabe) {
             await m.react('ℹ️')
-            return m.reply('> ⓘ El *Anti-Arabe* ya está activado.')
+            return conn.reply(m.chat,
+`┏━━━━━━━━━━━━━━━━━━━━━┓
+┃  ⓘ INFORMACIÓN ┃
+┗━━━━━━━━━━━━━━━━━━━━━┛
+
+> El Anti-Arabe ya está activado.`, m)
         }
         chat.antiArabe = true
         await m.react('✅')
-        m.reply(`╭─「 🛡️ *ANTI-ARABE ACTIVADO* 🛡️ 」
-│ 
-│ ✅ *Protección activada:*
-│ ├ Números árabes detectados
-│ ├ Usuarios serán EXPULSADOS
-│ ├ +20 países árabes bloqueados
-│ └ Mensajes eliminados
-│ 
-│ 🌍 *Cobertura completa:*
-│ ├ Medio Oriente completo
-│ ├ Norte de África
-│ └ Península arábiga
-│ 
-│ ⚠️ *Advertencia:*
-│ ├ Usuarios árabes serán expulsados
-│ └ automáticamente al enviar mensajes
-│ 
-│ 🔒 *Grupo protegido*
-╰─◉`.trim())
+        conn.reply(m.chat,
+`┏━━━━━━━━━━━━━━━━━━━━━┓
+┃  ⓘ ACTIVADO ┃
+┗━━━━━━━━━━━━━━━━━━━━━┛
+
+> Anti-Arabe activado.
+> Números árabes serán expulsados.`, m)
 
     } else if (action === 'off') {
         if (!chat.antiArabe) {
             await m.react('ℹ️')
-            return m.reply('> ⓘ El *Anti-Arabe* ya está desactivado.')
+            return conn.reply(m.chat,
+`┏━━━━━━━━━━━━━━━━━━━━━┓
+┃  ⓘ INFORMACIÓN ┃
+┗━━━━━━━━━━━━━━━━━━━━━┛
+
+> El Anti-Arabe ya está desactivado.`, m)
         }
         chat.antiArabe = false
         await m.react('✅')
-        m.reply(`╭─「 🛡️ *ANTI-ARABE DESACTIVADO* 🛡️ 」
-│ 
-│ ✅ *Protección desactivada:*
-│ ├ Números árabes permitidos
-│ ├ Sin expulsiones
-│ └ Restricciones removidas
-│ 
-│ 🔓 *Grupo sin filtros árabes*
-╰─◉`.trim())
+        conn.reply(m.chat,
+`┏━━━━━━━━━━━━━━━━━━━━━┓
+┃  ⓘ DESACTIVADO ┃
+┗━━━━━━━━━━━━━━━━━━━━━┛
+
+> Anti-Arabe desactivado.
+> Números árabes permitidos.`, m)
     }
 }
 
