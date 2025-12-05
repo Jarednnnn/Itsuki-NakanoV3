@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
 
 let handler = async (m, { conn, text }) => {
-  if (!text) return m.reply('*╭━━[ C.C. - La Inmortal ]━━⬣*\n*┃*\n*┃🧀 Dime qué quieres que diga...*\n*┃📝 Ejemplo: .cc ¿Un contrato, Lelouch?*\n*┃*\n*╰━━━━━━━━━━━━━━━━━━⬣*')
+  if (!text) return m.reply('*╭━━[ C.C. - La Inmortal ]━━⬣*\n*┃*\n*┃ Dime qué quieres que diga...*\n*┃📝 Ejemplo: .cc ¿Un contrato, Lelouch?*\n*┃*\n*╰━━━━━━━━━━━━━━━━━━⬣*')
 
   const apiKey = '62d734ca543945338b343d3b6a88776f'
   
@@ -17,7 +17,7 @@ let handler = async (m, { conn, text }) => {
   const url = `http://api.voicerss.org/?${params}`
 
   try {
-    m.reply('*🧀 C.C. está preparando sus palabras...*')
+    m.reply('* C.C. está preparando sus palabras...*')
     
     const res = await fetch(url)
     if (!res.ok) throw new Error('Error al generar el audio.')
