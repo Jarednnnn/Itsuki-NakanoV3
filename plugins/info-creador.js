@@ -13,7 +13,7 @@ let handler = async (m, { conn }) => {
         name: 'cta_url',
         buttonParamsJson: JSON.stringify({ 
           display_text: 'Instagram 📸', 
-          url: 'https://www.instagram.com/jared.nnnn'  // ← Instagram actualizado
+          url: 'https://www.instagram.com/jared.nnnnn'  // ← Instagram actualizado
         })
       },
       {
