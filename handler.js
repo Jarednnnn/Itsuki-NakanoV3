@@ -14,6 +14,8 @@ clearTimeout(this)
 resolve()
 }, ms))
 
+// 🚨 IMPORTANTE: Esta lista solo es usada por la función de detección de prefijos generales, 
+// pero en la lógica principal del handler, solo se usa el prefijo del chat o el punto (.).
 const globalPrefixes = [
     '.', ',', '!', '#', '$', '%', '&', '*',
     '-', '_', '+', '=', '|', '\\', '/', '~',
@@ -23,10 +25,10 @@ const globalPrefixes = [
 const detectPrefix = (text, customPrefix = null) => {
     if (!text || typeof text !== 'string') return null
 
-    // Si customPrefix es una lista, la convertimos en una sola lista para buscar
-    const allPrefixes = Array.isArray(customPrefix) ? customPrefix : (customPrefix ? [customPrefix] : [])
+    // Aseguramos que customPrefix sea una lista de prefijos a buscar
+    const prefixesToSearch = Array.isArray(customPrefix) ? customPrefix : (customPrefix ? [customPrefix] : [])
 
-    for (const prefix of allPrefixes) {
+    for (const prefix of prefixesToSearch) {
         if (text.startsWith(prefix)) {
             return { 
                 match: prefix, 
@@ -469,37 +471,45 @@ continue
 }
 
 // ----------------------------------------------------------------------------------
-// ⭐ INICIO DE LÓGICA DE DETECCIÓN DE PREFIJOS MODIFICADA
+// ⭐ INICIO DE LÓGICA DE DETECCIÓN DE PREFIJOS MODIFICADA (MODO ESTRICTO)
 // ----------------------------------------------------------------------------------
 
 // 1. Obtener los prefijos del chat (principal + lista)
 let chatPrefixes = []
+// El prefijo principal configurado en el chat
 if (chat?.prefix) {
-    chatPrefixes.push(chat.prefix)
+    chatPrefixes.push(chat.prefix)
 }
+// Los prefijos adicionales configurados (secundarios)
 if (chat?.prefixes && Array.isArray(chat.prefixes)) {
-    chatPrefixes.push(...chat.prefixes.filter(p => p && p !== chat.prefix)) // Filtrar el principal si ya se incluyó
+    // Solo incluimos prefijos secundarios si son diferentes del principal
+    chatPrefixes.push(...chat.prefixes.filter(p => p && p !== chat.prefix))
 }
-chatPrefixes = [...new Set(chatPrefixes)] // Quitar duplicados entre principal y lista
 
-// 2. Definir la lista de prefijos para DETECCIÓN (todos los posibles)
-let detectionPrefixes = [...chatPrefixes, ...globalPrefixes]
+// 2. Definir la lista de prefijos para DETECCIÓN
+let detectionPrefixes = [...chatPrefixes]
+
+// Añadir el prefijo de respaldo ('.') si el chat NO tiene un prefijo principal configurado
+if (!chat?.prefix) {
+    detectionPrefixes.push('.')
+}
+
 detectionPrefixes = [...new Set(detectionPrefixes)].filter(p => p && typeof p === 'string')
 
 // 3. Detectar si el mensaje usa un prefijo de la lista.
-let prefixMatch = detectPrefix(m.text || '', detectionPrefixes)
+let prefixMatch = global.detectPrefix(m.text || '', detectionPrefixes)
 
-// 4. Si el comando es 'setprefix' o 'delprefix', aseguramos que funcione con prefijos globales (ej. '.').
-// Esto es para que el administrador siempre pueda cambiar el prefijo, incluso si no recuerda el actual.
+// 4. Excepción de seguridad: Si el comando es 'setprefix' o 'delprefix',
+// permitimos que se use el prefijo de respaldo ('.') incluso si el chat tiene un prefijo principal.
 const textWithoutPrefix = (m.text || '').replace(prefixMatch?.prefix || '', '').trim().toLowerCase()
 const isPrefixCommand = textWithoutPrefix.startsWith('setprefix') || textWithoutPrefix.startsWith('delprefix')
 
 if (!prefixMatch && isPrefixCommand) {
-    // Buscar si el comando de prefijo se usó con un prefijo global (e.g. .setprefix)
-    const globalPrefixMatch = detectPrefix(m.text || '', globalPrefixes)
-    if (globalPrefixMatch) {
-        prefixMatch = globalPrefixMatch
-    }
+    // Buscar si el comando de prefijo se usó con el prefijo de respaldo ('.')
+    const backupPrefixMatch = global.detectPrefix(m.text || '', ['.'])
+    if (backupPrefixMatch) {
+        prefixMatch = backupPrefixMatch
+    }
 }
 
 // ----------------------------------------------------------------------------------
@@ -508,54 +518,18 @@ if (!prefixMatch && isPrefixCommand) {
 
 
 let match
+
+// 🛑 APLICACIÓN DE MODO ESTRICTO: Si no hay un prefixMatch, se salta el comando (continue).
 if (prefixMatch) {
     match = [prefixMatch.prefix]
 } else {
-    const strRegex = (str) => String(str || '').replace(/[|\\{}()[\]^$+*?.]/g, "\\$&")
-    const pluginPrefix = plugin.customPrefix || this.prefix || global.prefix
-    match = (pluginPrefix instanceof RegExp ?
-    [[pluginPrefix.exec(m.text || ''), pluginPrefix]] :
-    Array.isArray(pluginPrefix) ?
-    pluginPrefix.map(prefix => {
-    const regex = prefix instanceof RegExp ?
-    prefix : new RegExp(strRegex(prefix))
-    return [regex.exec(m.text || ''), regex]
-    }) : typeof pluginPrefix === "string" ?
-    [[new RegExp(strRegex(pluginPrefix)).exec(m.text || ''), new RegExp(strRegex(pluginPrefix))]] :
-    [[[], new RegExp]]).find(prefix => prefix[1])
-}
-
-if (typeof plugin.before === "function") {
-if (await plugin.before.call(this, m, {
-match,
-prefixMatch,
-conn: this,
-participants,
-groupMetadata,
-userGroup,
-botGroup,
-isROwner,
-isOwner,
-isRAdmin,
-isAdmin,
-isBotAdmin,
-isPrems,
-chatUpdate,
-__dirname: ___dirname,
-__filename,
-user,
-chat,
-settings
-}))
-continue
-}
-if (typeof plugin !== "function") {
-continue
+    continue 
 }
 
 let usedPrefixTemp = ''
+// El único prefijo válido es el que detectó la lógica estricta
 if (prefixMatch && prefixMatch.prefix) {
-    usedPrefixTemp = prefixMatch.prefix // Asignamos el prefijo EXACTO detectado (sea el principal, uno secundario o global)
+    usedPrefixTemp = prefixMatch.prefix 
 } else if (match && match[0] && match[0][0]) {
     usedPrefixTemp = match[0][0]
 }
@@ -787,7 +761,7 @@ const msg = {
 │ > No está disponible para su uso.
 ╰─◉`
 }[type];
-if (msg) return conn.reply(m.chat, msg, m, global.rcanal).then(_ => m.react('X')) // Uso 'X' como un indicador simple de error, si es necesario.
+if (msg) return conn.reply(m.chat, msg, m, global.rcanal).then(_ => m.react('❌')) // Uso '❌' para error.
 }
 
 // === CORREGIDO: Cambiar global.__filename por fileURLToPath ===
