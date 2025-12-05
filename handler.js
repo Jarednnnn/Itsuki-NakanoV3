@@ -15,160 +15,141 @@ resolve()
 }, ms))
 
 const globalPrefixes = [
-    '.', ',', '!', '#', '$', '%', '&', '*',
-    '-', '_', '+', '=', '|', '\\', '/', '~',
-    '>', '<', '^', '?', ':', ';'
+    '.', ',', '!', '#', '$', '%', '&', '*',
+    '-', '_', '+', '=', '|', '\\', '/', '~',
+    '>', '<', '^', '?', ':', ';'
 ]
 
 const detectPrefix = (text, customPrefix = null) => {
-    if (!text || typeof text !== 'string') return null
+    if (!text || typeof text !== 'string') return null
 
-    if (customPrefix) {
-        if (Array.isArray(customPrefix)) {
-            for (const prefix of customPrefix) {
-                if (text.startsWith(prefix)) {
-                    return { 
-                        match: prefix, 
-                        prefix: prefix, 
-                        type: 'custom'
-                    }
-                }
-            }
-        }
-        else if (typeof customPrefix === 'string' && text.startsWith(customPrefix)) {
-            return { 
-                match: customPrefix, 
-                prefix: customPrefix, 
-                type: 'custom'
-            }
-        }
-    }
+    // Si customPrefix es una lista, la convertimos en una sola lista para buscar
+    const allPrefixes = Array.isArray(customPrefix) ? customPrefix : (customPrefix ? [customPrefix] : [])
 
-    for (const prefix of globalPrefixes) {
-        if (text.startsWith(prefix)) {
-            return { 
-                match: prefix, 
-                prefix: prefix, 
-                type: 'global'
-            }
-        }
-    }
-
-    return null
+    for (const prefix of allPrefixes) {
+        if (text.startsWith(prefix)) {
+            return { 
+                match: prefix, 
+                prefix: prefix, 
+                type: 'detected'
+            }
+        }
+    }
+    return null
 }
 
 const paisesCodigos = {
-    'arabia': ['+966', '966'],
-    'emiratos': ['+971', '971'],
-    'qatar': ['+974', '974'],
-    'kuwait': ['+965', '965'],
-    'bahrein': ['+973', '973'],
-    'oman': ['+968', '968'],
-    'egipto': ['+20', '20'],
-    'jordania': ['+962', '962'],
-    'siria': ['+963', '963'],
-    'irak': ['+964', '964'],
-    'yemen': ['+967', '967'],
-    'palestina': ['+970', '970'],
-    'libano': ['+961', '961'],
-    'india': ['+91', '91'],
-    'pakistan': ['+92', '92'],
-    'bangladesh': ['+880', '880'],
-    'afganistan': ['+93', '93'],
-    'nepal': ['+977', '977'],
-    'sri-lanka': ['+94', '94'],
-    'nigeria': ['+234', '234'],
-    'ghana': ['+233', '233'],
-    'kenia': ['+254', '254'],
-    'etiopia': ['+251', '251'],
-    'sudafrica': ['+27', '27'],
-    'senegal': ['+221', '221'],
-    'china': ['+86', '86'],
-    'indonesia': ['+62', '62'],
-    'filipinas': ['+63', '63'],
-    'vietnam': ['+84', '84'],
-    'tailandia': ['+66', '66'],
-    'rusia': ['+7', '7'],
-    'ucrania': ['+380', '380'],
-    'rumania': ['+40', '40'],
-    'polonia': ['+48', '48'],
-    'mexico': ['+52', '52'],
-    'brasil': ['+55', '55'],
-    'argentina': ['+54', '54'],
-    'colombia': ['+57', '57'],
-    'peru': ['+51', '51'],
-    'chile': ['+56', '56'],
-    'venezuela': ['+58', '58']
+    'arabia': ['+966', '966'],
+    'emiratos': ['+971', '971'],
+    'qatar': ['+974', '974'],
+    'kuwait': ['+965', '965'],
+    'bahrein': ['+973', '973'],
+    'oman': ['+968', '968'],
+    'egipto': ['+20', '20'],
+    'jordania': ['+962', '962'],
+    'siria': ['+963', '963'],
+    'irak': ['+964', '964'],
+    'yemen': ['+967', '967'],
+    'palestina': ['+970', '970'],
+    'libano': ['+961', '961'],
+    'india': ['+91', '91'],
+    'pakistan': ['+92', '92'],
+    'bangladesh': ['+880', '880'],
+    'afganistan': ['+93', '93'],
+    'nepal': ['+977', '977'],
+    'sri-lanka': ['+94', '94'],
+    'nigeria': ['+234', '234'],
+    'ghana': ['+233', '233'],
+    'kenia': ['+254', '254'],
+    'etiopia': ['+251', '251'],
+    'sudafrica': ['+27', '27'],
+    'senegal': ['+221', '221'],
+    'china': ['+86', '86'],
+    'indonesia': ['+62', '62'],
+    'filipinas': ['+63', '63'],
+    'vietnam': ['+84', '84'],
+    'tailandia': ['+66', '66'],
+    'rusia': ['+7', '7'],
+    'ucrania': ['+380', '380'],
+    'rumania': ['+40', '40'],
+    'polonia': ['+48', '48'],
+    'mexico': ['+52', '52'],
+    'brasil': ['+55', '55'],
+    'argentina': ['+54', '54'],
+    'colombia': ['+57', '57'],
+    'peru': ['+51', '51'],
+    'chile': ['+56', '56'],
+    'venezuela': ['+58', '58']
 }
 
 function detectCountryByNumber(number) {
-    const numStr = number.toString()
-    for (const [country, codes] of Object.entries(paisesCodigos)) {
-        for (const code of codes) {
-            if (numStr.startsWith(code.replace('+', ''))) {
-                return country
-            }
-        }
-    }
-    return 'local'
+    const numStr = number.toString()
+    for (const [country, codes] of Object.entries(paisesCodigos)) {
+        for (const code of codes) {
+            if (numStr.startsWith(code.replace('+', ''))) {
+                return country
+            }
+        }
+    }
+    return 'local'
 }
 
 function getCountryName(code) {
-    const countryNames = {
-        'arabia': 'Arabia Saudita',
-        'emiratos': 'Emiratos Árabes',
-        'qatar': 'Qatar',
-        'kuwait': 'Kuwait',
-        'bahrein': 'Bahréin',
-        'oman': 'Omán',
-        'egipto': 'Egipto',
-        'jordania': 'Jordania',
-        'siria': 'Siria',
-        'irak': 'Irak',
-        'yemen': 'Yemen',
-        'palestina': 'Palestina',
-        'libano': 'Líbano',
-        'india': 'India',
-        'pakistan': 'Pakistán',
-        'bangladesh': 'Bangladesh',
-        'afganistan': 'Afganistán',
-        'nepal': 'Nepal',
-        'sri-lanka': 'Sri Lanka',
-        'nigeria': 'Nigeria',
-        'ghana': 'Ghana',
-        'kenia': 'Kenia',
-        'etiopia': 'Etiopía',
-        'sudafrica': 'Sudáfrica',
-        'senegal': 'Senegal',
-        'china': 'China',
-        'indonesia': 'Indonesia',
-        'filipinas': 'Filipinas',
-        'vietnam': 'Vietnam',
-        'tailandia': 'Tailandia',
-        'rusia': 'Rusia',
-        'ucrania': 'Ucrania',
-        'rumania': 'Rumania',
-        'polonia': 'Polonia',
-        'mexico': 'México',
-        'brasil': 'Brasil',
-        'argentina': 'Argentina',
-        'colombia': 'Colombia',
-        'peru': 'Perú',
-        'chile': 'Chile',
-        'venezuela': 'Venezuela',
-        'local': 'Local'
-    }
-    return countryNames[code] || code
+    const countryNames = {
+        'arabia': 'Arabia Saudita',
+        'emiratos': 'Emiratos Árabes',
+        'qatar': 'Qatar',
+        'kuwait': 'Kuwait',
+        'bahrein': 'Bahréin',
+        'oman': 'Omán',
+        'egipto': 'Egipto',
+        'jordania': 'Jordania',
+        'siria': 'Siria',
+        'irak': 'Irak',
+        'yemen': 'Yemen',
+        'palestina': 'Palestina',
+        'libano': 'Líbano',
+        'india': 'India',
+        'pakistan': 'Pakistán',
+        'bangladesh': 'Bangladesh',
+        'afganistan': 'Afganistán',
+        'nepal': 'Nepal',
+        'sri-lanka': 'Sri Lanka',
+        'nigeria': 'Nigeria',
+        'ghana': 'Ghana',
+        'kenia': 'Kenia',
+        'etiopia': 'Etiopía',
+        'sudafrica': 'Sudáfrica',
+        'senegal': 'Senegal',
+        'china': 'China',
+        'indonesia': 'Indonesia',
+        'filipinas': 'Filipinas',
+        'vietnam': 'Vietnam',
+        'tailandia': 'Tailandia',
+        'rusia': 'Rusia',
+        'ucrania': 'Ucrania',
+        'rumania': 'Rumania',
+        'polonia': 'Polonia',
+        'mexico': 'México',
+        'brasil': 'Brasil',
+        'argentina': 'Argentina',
+        'colombia': 'Colombia',
+        'peru': 'Perú',
+        'chile': 'Chile',
+        'venezuela': 'Venezuela',
+        'local': 'Local'
+    }
+    return countryNames[code] || code
 }
 
 async function isUserAdmin(conn, groupJid, userJid) {
-    try {
-        const metadata = await conn.groupMetadata(groupJid)
-        const participant = metadata.participants.find(p => p.id === userJid)
-        return participant && (participant.admin === 'admin' || participant.admin === 'superadmin')
-    } catch (error) {
-        return false
-    }
+    try {
+        const metadata = await conn.groupMetadata(groupJid)
+        const participant = metadata.participants.find(p => p.id === userJid)
+        return participant && (participant.admin === 'admin' || participant.admin === 'superadmin')
+    } catch (error) {
+        return false
+    }
 }
 
 export async function handler(chatUpdate) {
@@ -294,12 +275,12 @@ if (typeof nuevo === "string" && nuevo.trim() && nuevo !== actual) {
 user.name = nuevo
 }} catch {}
 const chat = global.db.data.chats[m.chat]
-const settings = global.db.data.settings[this.user.jid]  
+const settings = global.db.data.settings[this.user.jid]  
 const isROwner = [...global.owner.map(([number]) => number)].map(v => v.replace(/[^0-9]/g, "") + "@s.whatsapp.net").includes(m.sender)
 const isOwner = isROwner || m.fromMe
 
 if (chat?.rootowner && !isROwner) {
-    return
+    return
 }
 
 const isPrems = isROwner || global.prems.map(v => v.replace(/[^0-9]/g, "") + "@s.whatsapp.net").includes(m.sender) || user.premium == true
@@ -318,135 +299,135 @@ if (m.isBaileys) return
 m.exp += Math.ceil(Math.random() * 10)
 
 try {
-    if (m.message && m.key.remoteJid.endsWith('@g.us')) {
-        const text = m.text || ''
-        const sender = m.sender
-        const userNumber = sender.split('@')[0]
+    if (m.message && m.key.remoteJid.endsWith('@g.us')) {
+        const text = m.text || ''
+        const sender = m.sender
+        const userNumber = sender.split('@')[0]
 
-        const userCountry = detectCountryByNumber(userNumber)
-        const countryName = getCountryName(userCountry)
+        const userCountry = detectCountryByNumber(userNumber)
+        const countryName = getCountryName(userCountry)
 
-        if (chat.antiArabe) {
-            const paisesArabes = [
-                '+966', '966', 
-                '+971', '971', 
-                '+974', '974', 
-                '+965', '965', 
-                '+973', '973', 
-                '+968', '968', 
-                '+20', '20',    
-                '+962', '962', 
-                '+963', '963', 
-                '+964', '964', 
-                '+967', '967', 
-                '+970', '970', 
-                '+961', '961', 
-                '+218', '218', 
-                '+212', '212', 
-                '+216', '216', 
-                '+213', '213', 
-                '+222', '222', 
-                '+253', '253', 
-                '+252', '252', 
-                '+249', '249'    
-            ]
+        if (chat.antiArabe) {
+            const paisesArabes = [
+                '+966', '966', 
+                '+971', '971', 
+                '+974', '974', 
+                '+965', '965', 
+                '+973', '973', 
+                '+968', '968', 
+                '+20', '20',    
+                '+962', '962', 
+                '+963', '963', 
+                '+964', '964', 
+                '+967', '967', 
+                '+970', '970', 
+                '+961', '961', 
+                '+218', '218', 
+                '+212', '212', 
+                '+216', '216', 
+                '+213', '213', 
+                '+222', '222', 
+                '+253', '253', 
+                '+252', '252', 
+                '+249', '249'    
+            ]
 
-            const esArabe = paisesArabes.some(code => userNumber.startsWith(code.replace('+', '')))
+            const esArabe = paisesArabes.some(code => userNumber.startsWith(code.replace('+', '')))
 
-            if (esArabe) {
-                const isUserAdm = await isUserAdmin(this, m.chat, sender)
-                if (!isUserAdm) {
-                    // Eliminación del usuario
-                    await this.groupParticipantsUpdate(m.chat, [sender], 'remove')
-                    
-                    // Notificación de Ejecución
-                    await this.sendMessage(m.chat, { 
-                        text: `╭─「 PROTOCOLO ANTI-ARABE (EJECUTADO) 」
-│ 
+            if (esArabe) {
+                const isUserAdm = await isUserAdmin(this, m.chat, sender)
+                if (!isUserAdm) {
+                    // Eliminación del usuario
+                    await this.groupParticipantsUpdate(m.chat, [sender], 'remove')
+                    
+                    // Notificación de Ejecución
+                    await this.sendMessage(m.chat, { 
+                        text: `╭─「 PROTOCOLO ANTI-ARABE (EJECUTADO) 」
+│ 
 │ *DIRECTRIZ: Expulsar elemento de código 9xx*
-│ 
+│ 
 │ 📋 *INFORME DE ACCIÓN:*
 │ ├ Elemento: *Detectado como código árabe*
 │ ├ Localización: Número árabe
 │ ├ Razón: Infracción del Protocolo Anti-Arabe
 │ ├ Acción: **Removido del Grupo**
-│ 
+│ 
 │ 💡 *MODIFICACIÓN DEL SISTEMA:*
 │ └ Use el comando .antiarabe off
 ╰─◉`.trim(),
-                        mentions: [sender]
-                    })
-                    return
-                }
-            }
-        }
+                        mentions: [sender]
+                    })
+                    return
+                }
+            }
+        }
 
-        if (chat.antiExtranjero || (chat.paisesBloqueados && chat.paisesBloqueados.length > 0)) {
-            const paisBloqueado = chat.paisesBloqueados.includes(userCountry)
+        if (chat.antiExtranjero || (chat.paisesBloqueados && chat.paisesBloqueados.length > 0)) {
+            const paisBloqueado = chat.paisesBloqueados.includes(userCountry)
 
-            if (chat.antiExtranjero && userCountry !== 'local') {
-                const isUserAdm = await isUserAdmin(this, m.chat, sender)
-                if (!isUserAdm) {
-                    // Eliminación del usuario
-                    await this.groupParticipantsUpdate(m.chat, [sender], 'remove')
+            if (chat.antiExtranjero && userCountry !== 'local') {
+                const isUserAdm = await isUserAdmin(this, m.chat, sender)
+                if (!isUserAdm) {
+                    // Eliminación del usuario
+                    await this.groupParticipantsUpdate(m.chat, [sender], 'remove')
 
-                    // Notificación de Ejecución
-                    await this.sendMessage(m.chat, {
-                        text: `╭─「 PROTOCOLO ANTI-EXTRANJERO (EJECUTADO) 」
-│ 
+                    // Notificación de Ejecución
+                    await this.sendMessage(m.chat, {
+                        text: `╭─「 PROTOCOLO ANTI-EXTRANJERO (EJECUTADO) 」
+│ 
 │ *DIRECTRIZ: Expulsar elemento no local*
-│ 
+│ 
 │ 📋 *INFORME DE ACCIÓN:*
 │ ├ Elemento: Extranjero
 │ ├ Localización: ${countryName}
 │ ├ Razón: Infracción del Protocolo Anti-Extranjero
 │ ├ Acción: **Removido del Grupo**
-│ 
+│ 
 │ 🌍 *ESTADO ACTUAL:*
 │ ├ Solo unidades locales permitidas.
-│ 
+│ 
 │ 💡 *MODIFICACIÓN DEL SISTEMA:*
 │ └ Use el comando .antiextranjero off
 ╰─◉`.trim(),
-                        mentions: [sender]
-                    })
-                    return
-                }
-            }
+                        mentions: [sender]
+                    })
+                    return
+                }
+            }
 
-            if (paisBloqueado) {
-                const isUserAdm = await isUserAdmin(this, m.chat, sender)
-                if (!isUserAdm) {
-                    // Eliminación del usuario
-                    await this.groupParticipantsUpdate(m.chat, [sender], 'remove')
+            if (paisBloqueado) {
+                const isUserAdm = await isUserAdmin(this, m.chat, sender)
+                if (!isUserAdm) {
+                    // Eliminación del usuario
+                    await this.groupParticipantsUpdate(m.chat, [sender], 'remove')
 
-                    // Notificación de Ejecución
-                    await this.sendMessage(m.chat, {
-                        text: `╭─「 PAÍS BAJO RESTRICCIÓN (BLOQUEADO) 」
-│ 
+                    // Notificación de Ejecución
+                    await this.sendMessage(m.chat, {
+                        text: `╭─「 PAÍS BAJO RESTRICCIÓN (BLOQUEADO) 」
+│ 
 │ *DIRECTRIZ: Expulsar elemento de zona restringida*
-│ 
+│ 
 │ 📋 *INFORME DE ACCIÓN:*
 │ ├ Elemento: Ciudadano de ${userCountry}
 │ ├ Localización: ${countryName}
 │ ├ Razón: País listado en Zonas Bloqueadas
 │ ├ Acción: **Removido del Grupo**
-│ 
+│ 
 │ 📋 *LISTADO DE ZONAS BLOQUEADAS:*
 │ ${chat.paisesBloqueados.map(p => `├ ${getCountryName(p)}`).join('\n')}
-│ 
+│ 
 │ 💡 *MODIFICACIÓN DEL SISTEMA:*
 │ └ Use .bloquepais add/remove/list
 ╰─◉`.trim(),
-                        mentions: [sender]
-                    })
-                    return
-                }
-            }
-        }
-    }
+                        mentions: [sender]
+                    })
+                    return
+                }
+            }
+        }
+    }
 } catch (error) {
-    console.error('Error en sistema de protocolo de seguridad:', error)
+    console.error('Error en sistema de protocolo de seguridad:', error)
 }
 
 let usedPrefix
@@ -458,7 +439,7 @@ const isRAdmin = userGroup?.admin == "superadmin" || false
 const isAdmin = isRAdmin || userGroup?.admin == "admin" || false
 
 if (chat?.adminmode && !isAdmin && !isROwner) {
-    return
+    return
 }
 
 const isBotAdmin = botGroup?.admin || false
@@ -487,40 +468,61 @@ if (plugin.tags && plugin.tags.includes("admin")) {
 continue
 }
 
-const chatPrefixes = chat?.prefixes || []
-const chatPrefix = chat?.prefix || null
+// ----------------------------------------------------------------------------------
+// ⭐ INICIO DE LÓGICA DE DETECCIÓN DE PREFIJOS MODIFICADA
+// ----------------------------------------------------------------------------------
 
-let allPrefixes = []
-if (chatPrefixes.length > 0) {
-    allPrefixes = [...chatPrefixes]
+// 1. Obtener los prefijos del chat (principal + lista)
+let chatPrefixes = []
+if (chat?.prefix) {
+    chatPrefixes.push(chat.prefix)
+}
+if (chat?.prefixes && Array.isArray(chat.prefixes)) {
+    chatPrefixes.push(...chat.prefixes.filter(p => p && p !== chat.prefix)) // Filtrar el principal si ya se incluyó
+}
+chatPrefixes = [...new Set(chatPrefixes)] // Quitar duplicados entre principal y lista
+
+// 2. Definir la lista de prefijos para DETECCIÓN (todos los posibles)
+let detectionPrefixes = [...chatPrefixes, ...globalPrefixes]
+detectionPrefixes = [...new Set(detectionPrefixes)].filter(p => p && typeof p === 'string')
+
+// 3. Detectar si el mensaje usa un prefijo de la lista.
+let prefixMatch = detectPrefix(m.text || '', detectionPrefixes)
+
+// 4. Si el comando es 'setprefix' o 'delprefix', aseguramos que funcione con prefijos globales (ej. '.').
+// Esto es para que el administrador siempre pueda cambiar el prefijo, incluso si no recuerda el actual.
+const textWithoutPrefix = (m.text || '').replace(prefixMatch?.prefix || '', '').trim().toLowerCase()
+const isPrefixCommand = textWithoutPrefix.startsWith('setprefix') || textWithoutPrefix.startsWith('delprefix')
+
+if (!prefixMatch && isPrefixCommand) {
+    // Buscar si el comando de prefijo se usó con un prefijo global (e.g. .setprefix)
+    const globalPrefixMatch = detectPrefix(m.text || '', globalPrefixes)
+    if (globalPrefixMatch) {
+        prefixMatch = globalPrefixMatch
+    }
 }
 
-if (chatPrefix) {
-    allPrefixes = [chatPrefix, ...allPrefixes]
-}
+// ----------------------------------------------------------------------------------
+// ⭐ FIN DE LÓGICA DE DETECCIÓN DE PREFIJOS MODIFICADA
+// ----------------------------------------------------------------------------------
 
-allPrefixes = [...allPrefixes, ...globalPrefixes]
-
-allPrefixes = [...new Set(allPrefixes)]
-
-const prefixMatch = detectPrefix(m.text || '', allPrefixes)
 
 let match
 if (prefixMatch) {
-    match = [prefixMatch.prefix]
+    match = [prefixMatch.prefix]
 } else {
-    const strRegex = (str) => String(str || '').replace(/[|\\{}()[\]^$+*?.]/g, "\\$&")
-    const pluginPrefix = plugin.customPrefix || this.prefix || global.prefix
-    match = (pluginPrefix instanceof RegExp ?
-    [[pluginPrefix.exec(m.text || ''), pluginPrefix]] :
-    Array.isArray(pluginPrefix) ?
-    pluginPrefix.map(prefix => {
-    const regex = prefix instanceof RegExp ?
-    prefix : new RegExp(strRegex(prefix))
-    return [regex.exec(m.text || ''), regex]
-    }) : typeof pluginPrefix === "string" ?
-    [[new RegExp(strRegex(pluginPrefix)).exec(m.text || ''), new RegExp(strRegex(pluginPrefix))]] :
-    [[[], new RegExp]]).find(prefix => prefix[1])
+    const strRegex = (str) => String(str || '').replace(/[|\\{}()[\]^$+*?.]/g, "\\$&")
+    const pluginPrefix = plugin.customPrefix || this.prefix || global.prefix
+    match = (pluginPrefix instanceof RegExp ?
+    [[pluginPrefix.exec(m.text || ''), pluginPrefix]] :
+    Array.isArray(pluginPrefix) ?
+    pluginPrefix.map(prefix => {
+    const regex = prefix instanceof RegExp ?
+    prefix : new RegExp(strRegex(prefix))
+    return [regex.exec(m.text || ''), regex]
+    }) : typeof pluginPrefix === "string" ?
+    [[new RegExp(strRegex(pluginPrefix)).exec(m.text || ''), new RegExp(strRegex(pluginPrefix))]] :
+    [[[], new RegExp]]).find(prefix => prefix[1])
 }
 
 if (typeof plugin.before === "function") {
@@ -553,9 +555,9 @@ continue
 
 let usedPrefixTemp = ''
 if (prefixMatch && prefixMatch.prefix) {
-    usedPrefixTemp = prefixMatch.prefix
+    usedPrefixTemp = prefixMatch.prefix // Asignamos el prefijo EXACTO detectado (sea el principal, uno secundario o global)
 } else if (match && match[0] && match[0][0]) {
-    usedPrefixTemp = match[0][0]
+    usedPrefixTemp = match[0][0]
 }
 
 if (usedPrefixTemp) {
@@ -601,7 +603,7 @@ if (!primaryBotId || primaryBotId === botId) {
 const aviso = `╭─「 ADVERTENCIA - COMANDO RESTRINGIDO 」
 │
 │ **El Bot está Desactivado en este Sector.**
-│ 
+│ 
 │ > *La comunicación ha sido bloqueada.*
 │ > Un **Administrador** puede restablecer el enlace
 │ > con el comando: **${usedPrefix}bot on**
@@ -613,9 +615,9 @@ if (m.text && user.banned && !isROwner) {
 const mensaje = `╭─「 ACCESO DENEGADO - IDENTIDAD PROHIBIDA 」
 │
 │ **Su Identidad está Bajo Restricción.**
-│ 
+│ 
 │ > **Razón:** ${user.bannedReason || 'No especificada'}
-│ 
+│ 
 │ **No tiene autorización para emitir comandos.**
 │ Si considera que es un error, contacte
 │ con un moderador.
@@ -650,11 +652,11 @@ continue
 if (plugin.group && !m.isGroup) {
 fail("group", m, this)
 continue
-}  
+}  
 if (plugin.botAdmin && !isBotAdmin) {
 fail("botAdmin", m, this)
 continue
-}  
+}  
 if (plugin.admin && !isAdmin) {
 fail("admin", m, this)
 continue
@@ -726,62 +728,62 @@ let user2 = m.pushName || 'Anónimo'
 let verifyaleatorio = ['registrar', 'reg', 'verificar', 'verify', 'register'].getRandom()
 
 const msg = {
-    rowner: `╭─「 RESTRICCIÓN - ACCESO DENEGADO (PROPIETARIO SUPREMO) 」
+    rowner: `╭─「 RESTRICCIÓN - ACCESO DENEGADO (PROPIETARIO SUPREMO) 」
 │
 │ **El comando requiere Nivel de Autoridad Máxima.**
-│ 
+│ 
 │ > **Acción Requerida:** Ser el Propietario Raíz del Bot.
 ╰─◉`,
-    owner: `╭─「 RESTRICCIÓN - ACCESO DENEGADO (PROPIETARIO) 」
+    owner: `╭─「 RESTRICCIÓN - ACCESO DENEGADO (PROPIETARIO) 」
 │
 │ **El comando está reservado para el Propietario del Bot.**
-│ 
+│ 
 │ > **Acción Requerida:** Ser el Propietario del Sistema.
 ╰─◉`,
-    mods: `╭─「 RESTRICCIÓN - ACCESO DENEGADO (MODERADOR) 」
+    mods: `╭─「 RESTRICCIÓN - ACCESO DENEGADO (MODERADOR) 」
 │
 │ **El comando está restringido a Moderadores de Alto Nivel.**
 ╰─◉`,
-    premium: `╭─「 RESTRICCIÓN - LICENCIA REQUERIDA 」
+    premium: `╭─「 RESTRICCIÓN - LICENCIA REQUERIDA 」
 │
 │ **Este comando exige una Licencia Premium (o Propietario).**
-│ 
+│ 
 │ > Su estatus actual no califica para la ejecución.
 ╰─◉`,
-    group: `╭─「 RESTRICCIÓN - DOMINIO INCORRECTO 」
+    group: `╭─「 RESTRICCIÓN - DOMINIO INCORRECTO 」
 │
 │ **El comando solo puede ser invocado en Grupos/Sectores Colectivos.**
-│ 
+│ 
 │ > Invoque el comando en un dominio apropiado.
 ╰─◉`,
-    private: `╭─「 RESTRICCIÓN - DOMINIO INCORRECTO 」
+    private: `╭─「 RESTRICCIÓN - DOMINIO INCORRECTO 」
 │
 │ **El comando solo puede ser invocado en Conversación Privada con el Bot.**
-│ 
+│ 
 │ > Invoque el comando en un dominio apropiado.
 ╰─◉`,
-    admin: `╭─「 RESTRICCIÓN - AUTORIDAD INSUFICIENTE 」
+    admin: `╭─「 RESTRICCIÓN - AUTORIDAD INSUFICIENTE 」
 │
 │ **El comando está reservado para Administradores de este Grupo.**
-│ 
+│ 
 │ > Su nivel de autoridad no es suficiente para la ejecución.
 ╰─◉`,
-    botAdmin: `╭─「 RESTRICCIÓN - PRIVILEGIOS DEL BOT 」
+    botAdmin: `╭─「 RESTRICCIÓN - PRIVILEGIOS DEL BOT 」
 │
 │ **El Bot debe ser un Administrador para ejecutar esta directriz.**
-│ 
+│ 
 │ > Otorgue privilegios de Administración al Bot.
 ╰─◉`,
-    unreg: `╭─「 PROTOCOLO DE IDENTIDAD REQUERIDO 」
+    unreg: `╭─「 PROTOCOLO DE IDENTIDAD REQUERIDO 」
 │
 │ **Necesita Registrar su Identidad en el Sistema.**
-│ 
+│ 
 │ > **Instrucción:** Escriba **${verifyaleatorio} [Nombre].[Edad ${edadaleatoria}]** para inscribirse.
 ╰─◉`,
-    restrict: `╭─「 RESTRICCIÓN - COMANDO DESHABILITADO 」
+    restrict: `╭─「 RESTRICCIÓN - COMANDO DESHABILITADO 」
 │
 │ **El comando ha sido deshabilitado por el Propietario del Sistema.**
-│ 
+│ 
 │ > No está disponible para su uso.
 ╰─◉`
 }[type];
@@ -799,6 +801,6 @@ if (global.reloadHandler) console.log(await global.reloadHandler())
 global.detectPrefix = detectPrefix
 global.globalPrefixes = globalPrefixes
 
-export default {  
-    handler
+export default {  
+    handler
 }
