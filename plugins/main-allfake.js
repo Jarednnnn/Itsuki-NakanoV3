@@ -8,8 +8,8 @@ handler.all = async function (m) {
 
   // Canales (sin links para que su majestad los ponga luego)
   global.canalIdM = [
-    "@newsletter",
-    "@newsletter"
+    "0029Va4K0PZ5a245NkngBA2M @newsletter",
+    "0029Va4K0PZ5a245NkngBA2M @newsletter"
   ]
   global.canalNombreM = [
     "Imperio de Britannia ┇ Noticias",
