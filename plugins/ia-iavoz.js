@@ -1,26 +1,26 @@
 import fetch from 'node-fetch'
 
 let handler = async (m, { conn, text }) => {
-  if (!text) return m.reply('Escribe algo')
+  // Prompt con personalidad C.C.
+  const prompt = `Eres C.C. de Code Geass. Responde breve:
+  - Habla de contratos
+  - Mención a Lelouch si aplica
+  - Tono misterioso
+  - Máximo 2 frases
   
-  // API de Google TTS (gratis, sin límites)
-  const url = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=es&q=${encodeURIComponent(text)}`
+  Usuario: ${text}`
   
-  try {
-    const res = await fetch(url)
-    const audioBuffer = await res.arrayBuffer()
-    
-    await conn.sendMessage(m.chat, {
-      audio: Buffer.from(audioBuffer),
-      mimetype: 'audio/mpeg'
-    }, { quoted: m })
-    
-  } catch (e) {
-    m.reply('Error')
-  }
+  const ai = await fetch(`https://blackbox.ai/api/chat?message=${encodeURIComponent(prompt)}`)
+  const respuesta = await ai.text()
+  
+  const voz = await fetch(`https://translate.google.com/translate_tts?tl=es&q=${encodeURIComponent(respuesta)}`)
+  const audio = await voz.arrayBuffer()
+  
+  await conn.sendMessage(m.chat, { 
+    audio: Buffer.from(audio), 
+    mimetype: 'audio/mpeg' 
+  })
 }
 
-handler.help = ['iavoz <texto>']
-handler.tags = ['ia']
-handler.command = ['iavoz']
+handler.command = ['cc']
 export default handler
