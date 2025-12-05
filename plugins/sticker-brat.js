@@ -9,14 +9,15 @@ const execAsync = util.promisify(exec);
 
 let handler = async (m, { conn, text, args, usedPrefix, command }) => {
     try {
-        await m.react('🕒');
+        await m.react('⏳');
 
         if (!text) {
             await m.react('❔');
             return conn.reply(m.chat, 
-                '> `❌ TEXTO FALTANTE`\n\n' +
-                '> `📝 Debes escribir texto después del comando`\n\n' +
-                '> `💡 Ejemplo:` *' + usedPrefix + command + ' texto aquí*', 
+                'ⓘ `TEXTO NO ESPECIFICADO` ❌\n\n' +
+                'ⓘ `Debes escribir texto después del comando.`\n' +
+                'ⓘ `Ejemplo de uso:` *' + usedPrefix + command + ' texto aquí*\n\n' +
+                'ⓘ `La precisión en los comandos es esencial.`', 
                 m
             );
         }
@@ -103,12 +104,28 @@ let handler = async (m, { conn, text, args, usedPrefix, command }) => {
             throw new Error('No se pudo crear el sticker');
         }
 
-        await m.react('✅️');
+        await m.react('✅');
 
         const stickerBuffer = fs.readFileSync(tempStickerPath);
         await conn.sendMessage(m.chat, {
             sticker: stickerBuffer
         }, { quoted: m });
+
+        // ⓘ Mensaje de confirmación
+        setTimeout(async () => {
+            try {
+                await conn.reply(m.chat,
+                    'ⓘ `STICKER BRAT GENERADO` ✅\n\n' +
+                    'ⓘ `Texto procesado:` ' + text + '\n' +
+                    'ⓘ `Tamaño:` ' + Math.round(stickerBuffer.length / 1024) + ' KB\n' +
+                    'ⓘ `Formato:` WebP\n\n' +
+                    'ⓘ `Conversión completada exitosamente.` 🎭',
+                    m
+                );
+            } catch (e) {
+                // ⓘ Mensaje de confirmación opcional fallido
+            }
+        }, 1000);
 
         setTimeout(() => {
             try {
@@ -125,21 +142,29 @@ let handler = async (m, { conn, text, args, usedPrefix, command }) => {
         
         await m.react('❌');
         
-        let errorMessage = '> `❌ ERROR ENCONTRADO`\n\n';
+        let errorMessage = 'ⓘ `ERROR EN LA OPERACIÓN` ❌\n\n';
         
         if (error.message.includes('insuficientes') || error.message.includes('vacío')) {
-            errorMessage += '> `📝 El servicio devolvió un archivo vacío o corrupto.`';
+            errorMessage += 'ⓘ `El servicio devolvió un archivo vacío o corrupto.`\n';
+            errorMessage += 'ⓘ `Intenta con un texto diferente.`';
         } else if (error.code === 'ECONNABORTED') {
-            errorMessage += '> `⏰ Tiempo de espera agotado. Intenta de nuevo.`';
+            errorMessage += 'ⓘ `Tiempo de espera agotado.`\n';
+            errorMessage += 'ⓘ `La conexión excedió el límite temporal.`';
         } else if (error.response) {
-            errorMessage += '> `📝 Error en la API: ' + error.response.status + '`';
+            errorMessage += 'ⓘ `Error en la API:` ' + error.response.status + '\n';
+            errorMessage += 'ⓘ `Servicio temporalmente no disponible.`';
         } else if (error.request) {
-            errorMessage += '> `📝 No se pudo conectar con el servicio.`';
+            errorMessage += 'ⓘ `No se pudo conectar con el servicio.`\n';
+            errorMessage += 'ⓘ `Verifica tu conexión a internet.`';
         } else if (error.message.includes('ffmpeg')) {
-            errorMessage += '> `📝 Error al procesar el video.`';
+            errorMessage += 'ⓘ `Error en el procesamiento del video.`\n';
+            errorMessage += 'ⓘ `FFmpeg no pudo convertir el archivo.`';
         } else {
-            errorMessage += '> `📝 ' + error.message + '`';
+            errorMessage += 'ⓘ `' + error.message + '`\n';
+            errorMessage += 'ⓘ `Error no identificado en el sistema.`';
         }
+
+        errorMessage += '\n\nⓘ `Reintenta la operación con parámetros diferentes.`';
 
         await conn.reply(m.chat, errorMessage, m);
     }
@@ -149,5 +174,12 @@ handler.help = ['brat'];
 handler.tags = ['sticker'];
 handler.command = ['brat'];
 handler.group = true;
+
+// ⓘ Información del comando
+handler.info = 
+    'ⓘ `brat` - Convierte texto en stickers animados estilo "brat"\n' +
+    'ⓘ `Uso:` .brat <texto>\n' +
+    'ⓘ `Ejemplo:` .brat Hola mundo\n' +
+    'ⓘ `Características:` Animación automática, formato WebP optimizado';
 
 export default handler;
