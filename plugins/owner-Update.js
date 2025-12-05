@@ -14,7 +14,7 @@ async function makeFkontak() {
     const thumb2 = Buffer.from(await res.arrayBuffer())
     return {
       key: { participants: '0@s.whatsapp.net', remoteJid: 'status@broadcast', fromMe: false, id: 'Halo' },
-      message: { locationMessage: { name: '⚜️ Sistema Lelouch ✅', jpegThumbnail: thumb2 } },
+      message: { locationMessage: { name: 'Sistema Lelouch ✅', jpegThumbnail: thumb2 } },
       participant: '0@s.whatsapp.net'
     }
   } catch {
@@ -34,7 +34,7 @@ let handler = async (m, { conn, args }) => {
     let response
 
     if (isUpToDate) {
-      response = `> ⚜️ *¡Lelouch ya está actualizado!*\n\n> ⚜️ *El bot está al día con las últimas mejoras*`
+      response = `> ⓘ *¡Lelouch ya está actualizado!*\n\n> ⓘ *El bot está al día con las últimas mejoras*`
       await m.react('✅')
     } else {
       const changed = []
@@ -45,14 +45,14 @@ let handler = async (m, { conn, args }) => {
       }
 
       const banner = [
-        '> ⚜️ *¡ACTUALIZACIÓN EXITOSA!*',
+        '> ⓘ *¡ACTUALIZACIÓN EXITOSA!*',
         '> ╰─────────────────',
         '',
-        '> ⚜️ *Archivos actualizados:*',
+        '> ⓘ *Archivos actualizados:*',
         ''
       ]
-      const list = changed.slice(0, 10).map(f => `> ⚜️ ${f}`).join('\n') || '> ⚜️ *Todos los archivos actualizados*'
-      response = `${banner.join('\n')}\n${list}\n\n> ⚜️ *¡Lelouch está listo!*`
+      const list = changed.slice(0, 10).map(f => `> ⓘ ${f}`).join('\n') || '> ⓘ *Todos los archivos actualizados*'
+      response = `${banner.join('\n')}\n${list}\n\n> ⓘ *¡Lelouch está listo!*`
       await m.react('✅')
     }
 
@@ -81,20 +81,20 @@ let handler = async (m, { conn, args }) => {
           ))
 
         if (conflictedFiles.length > 0) {
-          const conflictMsg = '> ⚜️ *¡Ops! Conflictos detectados*\n\n' +
-            '> ⚜️ *Archivos con conflictos:*\n\n' +
-            conflictedFiles.map(f => '> ⚜️ ' + f.slice(3)).join('\n') +
-            '\n\n> ⚜️ *Para solucionar:*\n' +
-            '> ⚜️ • Haz backup de tus cambios\n' +
-            '> ⚜️ • O actualiza manualmente'
+          const conflictMsg = '> ⓘ *¡Ops! Conflictos detectados*\n\n' +
+            '> ⓘ *Archivos con conflictos:*\n\n' +
+            conflictedFiles.map(f => '> ⓘ ' + f.slice(3)).join('\n') +
+            '\n\n> ⓘ *Para solucionar:*\n' +
+            '> ⓘ • Haz backup de tus cambios\n' +
+            '> ⓘ • O actualiza manualmente'
           return await conn.reply(m.chat, conflictMsg, m)
         }
       }
     } catch {}
 
     const msg = /not a git repository/i.test(error?.message || '')
-      ? '> ⚜️ *¡Error!*\n\n> ⚜️ Este directorio no es un repositorio Git.\n> ⚜️ Inicializa con `git init` y agrega el remoto.'
-      : `> ⚜️ *¡Error en la actualización!*\n\n> ⚜️ ${error?.message || 'Error desconocido.'}`
+      ? '> ⓘ *¡Error!*\n\n> ⓘ Este directorio no es un repositorio Git.\n> ⓘ Inicializa con `git init` y agrega el remoto.'
+      : `> ⓘ *¡Error en la actualización!*\n\n> ⓘ ${error?.message || 'Error desconocido.'}`
     await conn.reply(m.chat, msg, m)
   }
 }
