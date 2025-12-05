@@ -1,11 +1,24 @@
 import fetch from 'node-fetch'
 
 let handler = async (m, { conn, text }) => {
-  if (!text) return m.reply('[💖] Escribe algo para hablar con IA.')
+  if (!text) return m.reply('*╭━━[ C.C. - La Inmortal ]━━⬣*\n*┃*\n*┃🧀 Dime qué quieres que diga...*\n*┃📝 Ejemplo: .cc ¿Un contrato, Lelouch?*\n*┃*\n*╰━━━━━━━━━━━━━━━━━━⬣*')
 
-  const url = `https://api-adonix.ultraplus.click/ai/iavoz?apikey=${global.apikey}&q=${encodeURIComponent(text)}&voice=Esperanza`
+  const apiKey = '62d734ca543945338b343d3b6a88776f'
+  
+  const params = new URLSearchParams({
+    key: apiKey,
+    hl: 'es-es',
+    v: 'Conchita',
+    c: 'MP3',
+    f: '44khz_16bit_stereo',
+    src: text
+  })
+
+  const url = `http://api.voicerss.org/?${params}`
 
   try {
+    m.reply('*🧀 C.C. está preparando sus palabras...*')
+    
     const res = await fetch(url)
     if (!res.ok) throw new Error('Error al generar el audio.')
 
@@ -19,12 +32,12 @@ let handler = async (m, { conn, text }) => {
 
   } catch (e) {
     console.error(e)
-    m.reply('> 👾 Ocurrió un error al generar la voz.')
+    m.reply('*╭━━[ 🧀 Error ]━━⬣*\n*┃*\n*┃❌ El contrato de voz falló*\n*┃💡 Revisa tu conexión*\n*┃*\n*╰━━━━━━━━━━━━━━━━━━⬣*')
   }
 }
 
-handler.help = ['iavoz']
-handler.tags = ['ia']
-handler.command = ['iavoz']
+handler.help = ['cc <texto>']
+handler.tags = ['fun']
+handler.command = ['cc', 'c2']
 
 export default handler
