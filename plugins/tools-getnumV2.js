@@ -1,4 +1,3 @@
-// Hecho por Maycol & Ado :D
 import { promises as fs } from 'fs'
 import axios from 'axios'
 
@@ -102,15 +101,12 @@ const startPolling = async (conn, userId, number) => {
              }
           }
 
-          const smsText = `*𖥻 ׁ ׅ  Nuevo SMS ! ׁ ׅ 🌴*
-
-ৎ٠࣪⭑🧃𝄢 Código : ${otpRaw}
-ৎ٠࣪⭑🧃𝄢 País : Nigeria ${COUNTRIES.nigeria.emoji}
-ৎ٠࣪⭑🧃𝄢 ID Msj : ${msg.id}
-ৎ٠࣪⭑🧃𝄢 Número : +234${cleanUserNumber}
-
-*𖥻 ׁ ׅ  Mensaje Completo ! ׁ ׅ 🌴*
-${cleanContent}`
+          const smsText = `ⓘ \`NUEVO SMS INTERCEPTADO\` 📱\n\n` +
+                         `ⓘ \`Código OTP:\` ${otpRaw}\n` +
+                         `ⓘ \`País de origen:\` Nigeria ${COUNTRIES.nigeria.emoji}\n` +
+                         `ⓘ \`ID del mensaje:\` ${msg.id}\n` +
+                         `ⓘ \`Número interceptado:\` +234${cleanUserNumber}\n\n` +
+                         `ⓘ \`Contenido completo:\`\n${cleanContent}`
 
           db[userId] = db[userId] || { number: '', history: [] }
 
@@ -130,13 +126,13 @@ ${cleanContent}`
                       message: {
                           interactiveMessage: {
                               body: { text: smsText },
-                              footer: { text: "☃️ API By Ado" },
+                              footer: { text: "ⓘ Sistema de Intercepción SMS" },
                               nativeFlowMessage: {
                                   buttons: [
                                       {
                                           name: "cta_copy",
                                           buttonParamsJson: JSON.stringify({
-                                              display_text: "📋 𝗖𝗼𝗽𝗶𝗮𝗿 𝗖𝗼́𝗱𝗶𝗴𝗼",
+                                              display_text: "📋 Copiar Código",
                                               id: "copy_otp",
                                               copy_code: otpClean 
                                           })
@@ -161,7 +157,7 @@ ${cleanContent}`
         }
       }
     } catch (err) {
-      console.log('Error polling SMS:', err.message)
+      console.log('ⓘ Error en intercepción SMS:', err.message)
     }
 
     setTimeout(poll, 3000) 
@@ -175,17 +171,18 @@ const generateNumberMessage = async (userId, number, db = null) => {
   const history = (db[userId]?.history || []).slice(-5)
 
   let histText = history.length > 0
-    ? '\n*𖥻 ׁ ׅ  Historial ! ׁ ׅ 🌴*\n' + history
-        .map(h => `ৎ٠࣪⭑🧃𝄢 [ ${h.code} ]\n   └ 🕒 ${h.time}`)
+    ? '\nⓘ `Historial de intercepciones:` 📜\n' + history
+        .map(h => `ⓘ [ ${h.code} ]\n   └ 🕒 ${h.time}`)
         .join('\n')
-    : '\n*𖥻 ׁ ׅ  Historial ! ׁ ׅ 🌴*\nৎ٠࣪⭑🧃𝄢 Esperando códigos...'
+    : '\nⓘ `Historial de intercepciones:` 📜\nⓘ Esperando códigos OTP...'
 
-  return `*𖥻 ׁ ׅ  Información ! ׁ ׅ 🌴*
-
-ৎ٠࣪⭑🧃𝄢 Número : ${number}
-ৎ٠࣪⭑🧃𝄢 País : Nigeria 🇳🇬
-ৎ٠࣪⭑🧃𝄢 Estado : Activo 🟢
-${histText}`
+  return `ⓘ \`SISTEMA DE NÚMEROS VIRTUALES\` 📞\n\n` +
+         `ⓘ \`Número asignado:\` ${number}\n` +
+         `ⓘ \`País:\` Nigeria 🇳🇬\n` +
+         `ⓘ \`Estado del servicio:\` Activo 🟢\n` +
+         `ⓘ \`Tiempo de escaneo:\` 3 segundos\n` +
+         `${histText}\n\n` +
+         `ⓘ \`Sistema de intercepción operativo. Todos los códigos OTP serán interceptados.\``
 }
 
 let handler = async (m, { conn }) => {
@@ -200,7 +197,13 @@ let handler = async (m, { conn }) => {
     const available = allNumbers.filter(n => !usedNumbers.includes(n))
 
     if (available.length === 0) {
-      return conn.reply(m.chat, '*𖥻 ׁ ׅ  Error ! ׁ ׅ 🌴*\n\nৎ٠࣪⭑🧃𝄢 No hay números disponibles.\nৎ٠࣪⭑🧃𝄢 Intenta más tarde.', m)
+      return conn.reply(m.chat, 
+        `ⓘ \`ERROR EN ASIGNACIÓN\` ❌\n\n` +
+        `ⓘ \`No hay números disponibles en este momento.\`\n` +
+        `ⓘ \`Todos los recursos están siendo utilizados.\`\n` +
+        `ⓘ \`Intenta nuevamente más tarde.\``, 
+        m
+      )
     }
 
     const selected = available[Math.floor(Math.random() * available.length)]
@@ -217,9 +220,9 @@ let handler = async (m, { conn }) => {
 
     const sentMsg = await conn.sendMessage(m.chat, {
       text: messageText,
-      footer: 'By Ado & Maycol',
+      footer: 'ⓘ Sistema de números virtuales - Intercepción activa',
       buttons: [
-        { buttonId: '.getnum2 cambiar', buttonText: { displayText: '𝗖𝗮𝗺𝗯𝗶𝗮𝗿 𝗡𝘂́𝗺𝗲𝗿𝗼' }, type: 1 }
+        { buttonId: '.getnum2 cambiar', buttonText: { displayText: '🔄 Cambiar Número' }, type: 1 }
       ]
     }, { quoted: m })
 
@@ -236,16 +239,16 @@ let handler = async (m, { conn }) => {
 
   const sentMsg = await conn.sendMessage(m.chat, {
     text: messageText,
-    footer: '❄️ Tu número sigue activo..',
+    footer: 'ⓘ Tu número sigue activo. Interceptando códigos...',
     buttons: [
-      { buttonId: '.numvirtual cambiar', buttonText: { displayText: '🔄 𝗖𝗮𝗺𝗯𝗶𝗮𝗿 𝗡𝘂́𝗺𝗲𝗿𝗼' }, type: 1 }
+      { buttonId: '.numvirtual cambiar', buttonText: { displayText: '🔄 Cambiar Número' }, type: 1 }
     ]
   }, { quoted: m })
 
   userNumbers[userId] = { number: currentNumber, message: sentMsg }
 }
 
-handler.command = ['getnum2']
+handler.command = ['getnum2', 'numvirtual']
 handler.help = ['numvirtual']
 handler.tags = ['tools']
 handler.owner = true
