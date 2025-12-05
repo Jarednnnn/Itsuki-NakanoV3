@@ -6,11 +6,12 @@ import moment from 'moment-timezone'
 var handler = m => m
 handler.all = async function (m) { 
 
-  // ID y Nombre del Canal de WhatsApp para la función "getRandomChannel"
+  // ID y Nombre del Canal de WhatsApp (TU CANAL)
   const CANAL_ID = "0029Va4K0PZ5a245NkngBA2M@newsletter";
   const CANAL_NAME = "Lelouch vi Britannia ┇ Comunicados";
   
-  // Lista de IDs (se deja como array para compatibilidad con la función getRandomChannel)
+  // Lista de IDs: Usaremos tu ID. Asegúrate de que este ID sí funciona con los mensajes
+  // de vista previa de canal, ya que es alfanumérico.
   global.canalIdM = [
     CANAL_ID
   ]
@@ -18,9 +19,9 @@ handler.all = async function (m) {
     CANAL_NAME
   ]
   
-  // Aseguramos que la variable global de canal se cargue con los datos correctos
-  global.channelRD = { id: CANAL_ID, name: CANAL_NAME }
-  // Opcionalmente: global.channelRD = await getRandomChannel() // Puedes comentar esta línea si la de arriba funciona
+  // RESTAURAMOS la llamada a la función async que usa el código que funciona.
+  global.channelRD = await getRandomChannel() 
+  // NOTA: La función 'getRandomChannel' está definida al final de este archivo.
 
   // Fecha y hora
   global.d = new Date(new Date + 3600000)
@@ -81,6 +82,7 @@ handler.all = async function (m) {
     contextInfo: { 
       isForwarded: true, 
       forwardedNewsletterMessageInfo: { 
+        // Usamos la variable global channelRD cargada arriba
         newsletterJid: global.channelRD.id, 
         serverMessageId: '', 
         newsletterName: global.channelRD.name 
