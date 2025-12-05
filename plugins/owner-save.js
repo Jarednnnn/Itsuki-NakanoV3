@@ -3,67 +3,48 @@ import path from 'path'
 
 let handler = async (m, { text, usedPrefix, command }) => {
   if (!text) {
-    return m.reply(`> ꒰⌢ ʚ˚₊‧ 💾 ꒱꒱ :: *GUARDAR ARCHIVO* ıllı
-
-> ੭੭ ﹙ ❌ ﹚:: *Uso incorrecto*
-
-\`\`\`Debes proporcionar la ruta y nombre del archivo\`\`\`
+    return m.reply(`> ⓘ Uso incorrecto: Debes proporcionar la ruta y nombre del archivo
 
 *Ejemplo:*
 • ${usedPrefix + command} plugins/hola.js
 • ${usedPrefix + command} database/config.json
 
-*Nota:* Responde al mensaje con el código`)
+*Nota:* Responde al mensaje que contiene el código a guardar.`)
+  }
+
+  if (!m.quoted || !m.quoted.text) {
+    return m.reply('> ⓘ Responde al mensaje que contiene el código que quieres guardar, mi señor.')
   }
 
   try {
-    if (!m.quoted || !m.quoted.text) {
-      return m.reply(`> ꒰⌢ ʚ˚₊‧ 📝 ꒱꒱ :: *RESPONDE AL CÓDIGO* ıllı
-
-Responde al mensaje que contiene el código que quieres guardar`)
-    }
-
-    await m.react('💾')
-
     let filePath = text.trim()
-    
+
     // Asegurar ruta correcta
-    if (!filePath.startsWith('./')) {
-      filePath = './' + filePath
-    }
+    if (!filePath.startsWith('./')) filePath = './' + filePath
 
     // Crear directorio si no existe
     const dir = path.dirname(filePath)
-    if (!existsSync(dir)) {
-      mkdirSync(dir, { recursive: true })
-    }
+    if (!existsSync(dir)) mkdirSync(dir, { recursive: true })
 
     // Guardar archivo
     writeFileSync(filePath, m.quoted.text, 'utf8')
-    
-    await m.react('✅')
 
-    // Verificar que se guardó
-    const stats = existsSync(filePath) 
     const fileContent = m.quoted.text
 
-    return m.reply(`> ꒰⌢ ʚ˚₊‧ ✅ ꒱꒱ :: *ARCHIVO GUARDADO* ıllı
+    return m.reply(`> ⓘ Orden ejecutada: Archivo guardado correctamente, mi señor.
 
-> ੭੭ ﹙ 📁 ﹚:: *Ubicación*
+> ⓘ Ubicación:
 \`\`\`${filePath}\`\`\`
 
-> ੭੭ ﹙ 📊﹚:: *Tamaño*
+> ⓘ Tamaño:
 \`\`\`${fileContent.length} caracteres\`\`\`
 
-> ੭੭ ﹙ 📍 ﹚:: *Ruta completa*
-\`\`\`${path.resolve(filePath)}\`\`\`
-
-*✅ Guardado correctamente en tu servidor/local*`)
+> ⓘ Ruta completa:
+\`\`\`${path.resolve(filePath)}\`\`\``)
 
   } catch (error) {
-    await m.react('❌')
     console.error('Error:', error)
-    return m.reply(`> ❌ ERROR\n\`\`\`${error.message}\`\`\``)
+    return m.reply(`> ⓘ Error al guardar el archivo, mi señor.\n\`\`\`${error.message}\`\`\``)
   }
 }
 
