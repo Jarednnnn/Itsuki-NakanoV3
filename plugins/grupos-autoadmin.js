@@ -9,12 +9,12 @@ const handler = async (m, { conn, isAdmin, isBotAdmin, isROwner, usedPrefix, com
 
   // Si el bot no es admin, avisa
   if (!isBotAdmin) {
-    return conn.reply(m.chat, '> ⓘ \`Necesito ser administradora para poder promover usuarios\`', m)
+    return conn.reply(m.chat, '> ⓘ \`Necesito ser administrador para poder promover usuarios, mi señor\`', m)
   }
 
   // Si ya es admin, avisa
   if (isAdmin) {
-    return conn.reply(m.chat, '> ⓘ \`Ya tienes privilegios de administrador en este grupo\`', m)
+    return conn.reply(m.chat, '> ⓘ \`Ya tienes privilegios de administrador en este grupo, mi señor\`', m)
   }
 
   try {
