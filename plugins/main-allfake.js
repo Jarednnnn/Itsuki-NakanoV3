@@ -10,10 +10,10 @@ handler.all = async function (m) {
   // NOTA: Tu bot solo acepta IDs en formato numérico (los que terminan en @newsletter).
   // Si deseas usar un canal específico, debes buscar el ID numérico interno de ese canal.
   global.canalIdM = [
-    "120363404434164076@newsletter", // ID Numérico de ejemplo 1
-    "120363403726798403@newsletter", // ID Numérico de ejemplo 2
-    "120363425526390282@newsletter", // ID Numérico de ejemplo 3
-    "120363404434164076@newsletter"  // ID Numérico de ejemplo 4
+    "243675690991832@newsletter", // ID Numérico de ejemplo 1
+    "243675690991832@newsletter", // ID Numérico de ejemplo 2
+    "243675690991832@newsletter", // ID Numérico de ejemplo 3
+    "243675690991832@newsletter"  // ID Numérico de ejemplo 4
   ]
   global.canalNombreM = [
     "Lelouch vi Britannia ┇ Comunicados", // Tu nombre de canal, duplicado para compatibilidad
