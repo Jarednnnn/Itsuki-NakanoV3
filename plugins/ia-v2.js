@@ -1,46 +1,59 @@
 import fetch from 'node-fetch'
 
 let handler = async (m, { conn, usedPrefix, command, text }) => {
-  const ctxErr = (global.rcanalx || {})
-  const ctxOk = (global.rcanalr || {})
+    // Definiciones de contexto sin emojis (simulando objetos de respuesta global)
+    const ctxErr = (global.rcanalx || {})
+    const ctxOk = (global.rcanalr || {})
 
-  if (!text) {
-    await conn.sendMessage(m.chat, { react: { text: '❌', key: m.key } })
-    return conn.reply(m.chat, `☕️ *Debes escribir tu modelo y tu pregunta*\nEjemplo: gpt-5-nano ¿Hola?`, m, ctxErr)
-  }
+    if (!text) {
+        // Notificación de fallo: X
+        await conn.sendMessage(m.chat, { react: { text: 'X', key: m.key } })
+        return conn.reply(m.chat, `ATENCIÓN: Se requiere un protocolo de consulta.
+*FORMATO REQUERIDO:* [Modelo-IA] [Consulta]
+*Ejemplo:* ${usedPrefix + command} gpt-5-nano ¿Cuál es el código Geass?`, m, ctxErr)
+    }
 
-  let args = text.split(' ')
-  let model = args.shift().toLowerCase()
-  const question = args.join(' ')
+    let args = text.split(' ')
+    let model = args.shift().toLowerCase()
+    const question = args.join(' ')
 
-  const modelosDisponibles = ['gpt-5-nano', 'claude', 'gemini', 'deepseek', 'grok', 'meta-ai', 'qwen']
+    const modelosDisponibles = ['gpt-5-nano', 'claude', 'gemini', 'deepseek', 'grok', 'meta-ai', 'qwen']
 
-  if (!modelosDisponibles.includes(model)) {
-    await conn.sendMessage(m.chat, { react: { text: '❌', key: m.key } })
-    return conn.reply(m.chat, `🤖 *Modelo inválido*\nModelos disponibles: ${modelosDisponibles.join(', ')}`, m, ctxErr)
-  }
+    if (!modelosDisponibles.includes(model)) {
+        // Notificación de fallo: X
+        await conn.sendMessage(m.chat, { react: { text: 'X', key: m.key } })
+        return conn.reply(m.chat, `MODELO INVÁLIDO. La identidad solicitada no existe en el sistema.
+*Identidades disponibles:* ${modelosDisponibles.join(', ')}`, m, ctxErr)
+    }
 
-  if (!question) {
-    await conn.sendMessage(m.chat, { react: { text: '❌', key: m.key } })
-    return conn.reply(m.chat, `☕️ *Escribe tu pregunta después del modelo*`, m, ctxErr)
-  }
+    if (!question) {
+        // Notificación de fallo: X
+        await conn.sendMessage(m.chat, { react: { text: 'X', key: m.key } })
+        return conn.reply(m.chat, `REQUERIMIENTO INCOMPLETO. La consulta no ha sido formulada.`, m, ctxErr)
+    }
 
-  try {
-    await conn.sendMessage(m.chat, { react: { text: '💭', key: m.key } })
-    await conn.sendPresenceUpdate('composing', m.chat)
+    try {
+        // Indicador de "Procesando"
+        await conn.sendMessage(m.chat, { react: { text: '💭', key: m.key } })
+        await conn.sendPresenceUpdate('composing', m.chat)
 
-    const response = await fetch(`https://api-adonix.ultraplus.click/ai/chat?apikey=${global.apikey}&q=${encodeURIComponent(question)}&model=${model}`)
-    const data = await response.json()
+        const response = await fetch(`https://api-adonix.ultraplus.click/ai/chat?apikey=${global.apikey}&q=${encodeURIComponent(question)}&model=${model}`)
+        const data = await response.json()
 
-    if (!data.status || !data.reply) throw new Error('No se recibió respuesta de la API')
+        if (!data.status || !data.reply) throw new Error('El nodo de procesamiento no devolvió una respuesta válida.')
 
-    await conn.reply(m.chat, data.reply, m, ctxOk)
-    await conn.sendMessage(m.chat, { react: { text: '✅', key: m.key } })
+        // Respuesta del sistema
+        await conn.reply(m.chat, `*EJECUCIÓN DEL MODELO ${model.toUpperCase()} COMPLETADA*\n\n${data.reply}`, m, ctxOk)
+        
+        // Indicador de éxito: ✅
+        await conn.sendMessage(m.chat, { react: { text: '✅', key: m.key } })
 
-  } catch (err) {
-    await conn.sendMessage(m.chat, { react: { text: '❌', key: m.key } })
-    conn.reply(m.chat, `❌️ *Error:* ${err.message}`, m, ctxErr)
-  }
+    } catch (err) {
+        // Notificación de error: X
+        await conn.sendMessage(m.chat, { react: { text: 'X', key: m.key } })
+        conn.reply(m.chat, `ERROR CRÍTICO: Fallo en el enlace con el sistema externo.
+*Detalles del Fallo:* ${err.message}`, m, ctxErr)
+    }
 }
 
 handler.help = ["ia", "ai"]
