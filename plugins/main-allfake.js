@@ -32,17 +32,17 @@ global.packsticker = ``
 
 // Iconos random
 global.iconos = [
-  'https://i.postimg.cc/j52ctTrc/Lelouch.jpg',
-  'https://i.postimg.cc/j52ctTrc/Lelouch.jpg',
-  'https://i.postimg.cc/j52ctTrc/Lelouch.jpg',
-  'https://i.postimg.cc/j52ctTrc/Lelouch.jpg',
-  'https://i.postimg.cc/j52ctTrc/Lelouch.jpg',
-  'https://i.postimg.cc/j52ctTrc/Lelouch.jpg',
-  'https://i.postimg.cc/j52ctTrc/Lelouch.jpg',
-  'https://i.postimg.cc/j52ctTrc/Lelouch.jpg',
-  'https://i.postimg.cc/j52ctTrc/Lelouch.jpg',
-  'https://i.postimg.cc/j52ctTrc/Lelouch.jpg',
-  'https://i.postimg.cc/j52ctTrc/Lelouch.jpg'
+  'https://cdn.russellxz.click/a015cecd.jpg',
+  'https://cdn.russellxz.click/d112a400.jpg',
+  'https://cdn.russellxz.click/40fb346f.jpg',
+  'https://cdn.russellxz.click/d8cefbd9.jpg',
+  'https://cdn.russellxz.click/1d6aa06f.jpg',
+  'https://cdn.russellxz.click/8df6a43c.jpg',
+  'https://cdn.russellxz.click/0d27e894.jpg',
+  'https://cdn.russellxz.click/98e7e0df.jpg',
+  'https://cdn.russellxz.click/b262e815.jpg',
+  'https://cdn.russellxz.click/f46d62d3.jpg',
+  'https://cdn.russellxz.click/36caddb4.jpg'
 ]
 global.icono = global.iconos[Math.floor(Math.random() * global.iconos.length)]
 
@@ -50,11 +50,11 @@ global.icono = global.iconos[Math.floor(Math.random() * global.iconos.length)]
 global.wm = '© Lelouch vi Britannia'
 global.wm3 = '⫹⫺ Sistema Imperial ● Multi-Device'
 global.author = 'Desarrollado por Jared'
-global.dev = 'Comandante Supremo: Jared'
+global.dev = 'Owner: @Jared'
 global.textbot = 'Lelouch-vi-Britannia|AI-Core'
 global.etiqueta = '@Jared'
-global.gt = '© Desarrollado por Jared – Proyecto Britannia'
-global.me = '⚜️ Sistema Imperial de Lelouch'
+global.gt = '© Desarrollado por Jared – Britannia'
+global.me = '⚜️ Sistema de Lelouch'
 
 global.fkontak = { 
   key: { 
@@ -95,8 +95,8 @@ global.rcanal = {
 }
 
 // Otros
-global.listo = '*A sus órdenes*'
-global.moneda = 'Yenes Imperiales'
+global.listo = '*Aqui tienes*'
+global.moneda = 'Yenes'
 global.prefix = ['.', '!', '/', '#', '%']
 
 }
